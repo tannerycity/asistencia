@@ -3694,7 +3694,8 @@ document.addEventListener('keydown',e=>{
 let st2;
 function snack(msg,type){
   const el=document.getElementById('snack');
-  el.textContent=msg;
+  // Strip SVG tags for plain text display
+  el.textContent=msg.replace(/<[^>]*>/g,'').trim();
   el.className='snack show'+(type?' s-'+type:'');
   clearTimeout(st2);
   st2=setTimeout(()=>el.classList.remove('show'),3000);
