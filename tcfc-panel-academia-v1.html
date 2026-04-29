@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1278,6 +1279,21 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
         <p style="font-size:11px;color:var(--muted);margin-top:5px;">URL de tu Web App de Apps Script para sincronizar con Google Sheets.</p>
       </div>
 
+      <div class="fgrp" style="margin-bottom:20px">
+        <label class="flbl" style="margin-bottom:8px;display:block">Importar jugadores desde Excel</label>
+        <div style="background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);border-radius:9px;padding:12px 14px;margin-bottom:10px;font-size:12px;color:var(--muted);line-height:1.6">
+          El archivo Excel debe tener estas columnas en la primera fila:<br>
+          <code style="font-size:11px;background:var(--bg);padding:2px 5px;border-radius:3px">Nombre | Numero | Categoria | Posicion | Tutor | Telefono | Mensualidad</code>
+        </div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <input type="file" id="import-excel-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importFromExcel(this)"/>
+          <button class="btn-s btn-sm" onclick="document.getElementById('import-excel-file').click()">
+            Seleccionar archivo Excel
+          </button>
+          <span id="import-status" style="font-size:12px;color:var(--muted)"></span>
+        </div>
+        <div id="import-preview" style="display:none;margin-top:12px"></div>
+      </div>
       <!-- Seguridad de conexion -->
       <div class="fgrp" style="margin-bottom:20px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:14px">
         <label class="flbl" style="color:var(--gold);margin-bottom:8px;display:block"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Seguridad de conexion</label>
@@ -1333,21 +1349,6 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
         <p style="font-size:11px;color:var(--muted);margin-top:5px">Solo cuando el sistema este vacio. Carga jugadores y pagos de prueba para explorar el panel.</p>
       </div>
 
-      <div class="fgrp" style="margin-bottom:20px">
-        <label class="flbl" style="margin-bottom:8px;display:block">Importar jugadores desde Excel</label>
-        <div style="background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);border-radius:9px;padding:12px 14px;margin-bottom:10px;font-size:12px;color:var(--muted);line-height:1.6">
-          El archivo Excel debe tener estas columnas en la primera fila:<br>
-          <code style="font-size:11px;background:var(--bg);padding:2px 5px;border-radius:3px">Nombre | Numero | Categoria | Posicion | Tutor | Telefono | Mensualidad</code>
-        </div>
-        <div style="display:flex;gap:7px;align-items:center">
-          <input type="file" id="import-excel-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importFromExcel(this)"/>
-          <button class="btn-s btn-sm" onclick="document.getElementById('import-excel-file').click()">
-            Seleccionar archivo Excel
-          </button>
-          <span id="import-status" style="font-size:12px;color:var(--muted)"></span>
-        </div>
-        <div id="import-preview" style="display:none;margin-top:12px"></div>
-      </div>
       <div class="fgrp" style="margin-bottom:20px">
         <label class="flbl" style="margin-bottom:8px;display:block">Respaldo del Club</label>
         <div id="backup-reminder" style="display:none;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:9px;padding:10px 12px;margin-bottom:10px;font-size:12px;color:#D97706">
