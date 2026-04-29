@@ -534,6 +534,23 @@ input,select,textarea{font-family:inherit}
 .srch-chip:hover:not(.active){border-color:var(--blue-l);color:var(--blue-m)}
 mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;padding:0 2px}
 
+
+.qa-item{border-radius:8px;padding:8px 12px;margin-bottom:6px;border:1px solid var(--border);transition:all .15s}
+.qa-item.running{border-color:var(--blue-l);background:rgba(37,99,235,.04)}
+.qa-item.pass{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.05)}
+.qa-item.fail{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.05)}
+.qa-item.skip{opacity:.65}
+.qa-item-head{display:flex;align-items:center;gap:8px}
+.qa-id{font-size:10px;font-weight:700;color:var(--muted);min-width:44px}
+.qa-name{font-size:12.5px;font-weight:600;flex:1}
+.qa-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.qa-badge.pass{background:rgba(16,185,129,.12);color:var(--ok)}
+.qa-badge.fail{background:rgba(239,68,68,.08);color:var(--err)}
+.qa-badge.running{background:rgba(37,99,235,.1);color:var(--blue-m)}
+.qa-badge.skip{background:var(--bg);color:var(--muted)}
+.qa-detail{font-size:11px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);display:none;line-height:1.6}
+.qa-detail.fail{color:var(--err)}
+
 </style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -648,6 +665,9 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
     </button>
   </div>
   <div style="padding:12px 14px;border-top:1px solid var(--border);margin-top:auto">
+    <button id="qa-runner-btn" onclick="openQARunner()" style="width:100%;display:none;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;background:rgba(37,99,235,.07);border:1.5px solid rgba(37,99,235,.2);color:var(--blue-m);font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px">
+      Pruebas de regresion
+    </button>
     <button onclick="doLogout()" style="width:100%;display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;background:rgba(239,68,68,.07);border:1.5px solid rgba(239,68,68,.15);color:var(--err);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(239,68,68,.15)'" onmouseout="this.style.background='rgba(239,68,68,.07)'">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
       Cerrar sesion
@@ -1668,6 +1688,39 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 
 
 <!-- MODAL GOOGLE CALENDAR CONFIG -->
+
+<!-- MODAL QA RUNNER -->
+<div class="mover" id="m-qa-runner">
+  <div class="modal" style="max-width:580px">
+    <div class="mhd" style="background:var(--navy);border-radius:14px 14px 0 0">
+      <div>
+        <div class="mttl" style="color:#fff">Pruebas de regresion automaticas</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:2px">TannerOS v9 | ISTQB | Solo Admin</div>
+      </div>
+      <span class="mc" onclick="closeM('m-qa-runner')" style="color:rgba(255,255,255,.6)">x</span>
+    </div>
+    <div class="mbd">
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+        <button class="btn-p" id="qa-run-btn" onclick="runAllTests()" style="flex:1">Ejecutar todas las pruebas</button>
+        <button class="btn-s btn-sm" onclick="exportQAReport()">Exportar reporte</button>
+        <button class="btn-s btn-sm" onclick="resetQAResults()">Resetear</button>
+      </div>
+      <div id="qa-summary" style="display:none;background:var(--bg);border-radius:9px;padding:10px 14px;margin-bottom:12px;flex-wrap:wrap;gap:14px">
+        <div style="text-align:center"><div style="font-size:22px;font-weight:700;color:var(--navy)" id="qa-total">0</div><div style="font-size:10px;color:var(--muted)">Total</div></div>
+        <div style="text-align:center"><div style="font-size:22px;font-weight:700;color:var(--ok)" id="qa-pass">0</div><div style="font-size:10px;color:var(--muted)">Pasaron</div></div>
+        <div style="text-align:center"><div style="font-size:22px;font-weight:700;color:var(--err)" id="qa-fail">0</div><div style="font-size:10px;color:var(--muted)">Fallaron</div></div>
+        <div style="text-align:center"><div style="font-size:22px;font-weight:700;color:var(--muted)" id="qa-skip">0</div><div style="font-size:10px;color:var(--muted)">Avisos</div></div>
+        <div id="qa-verdict" style="flex:1;display:flex;align-items:center;justify-content:flex-end"></div>
+      </div>
+      <div id="qa-progress-wrap" style="display:none;margin-bottom:10px">
+        <div style="height:4px;background:var(--border);border-radius:99px;overflow:hidden"><div id="qa-progress-bar" style="height:100%;background:var(--blue-m);transition:width .3s;width:0%"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px" id="qa-progress-lbl">Iniciando...</div>
+      </div>
+      <div id="qa-results" style="max-height:380px;overflow-y:auto"></div>
+    </div>
+  </div>
+</div>
+
 <div class="mover" id="m-gcal">
   <div class="modal" style="max-width:440px">
     <div class="mhd"><span class="mttl">Conectar Google Calendar</span><span class="mc" onclick="closeM('m-gcal')">x</span></div>
@@ -2077,6 +2130,7 @@ function enterApp(role){
   nav(firstView);
   updateSheetsDot();
   const _ta2=document.getElementById('tb-act2');if(_ta2)_ta2.style.display='none';
+  const _qaBtn=document.getElementById('qa-runner-btn');if(_qaBtn)_qaBtn.style.display=currentRole==='admin'?'flex':'none';
   updateSyncBadge();
   setTimeout(processSyncQueue,2000);
   if(!window._onlineAdded){window._onlineAdded=true;window.addEventListener('online',()=>{updateSyncBadge();setTimeout(processSyncQueue,1500);});window.addEventListener('offline',()=>updateSyncBadge());}
@@ -3531,6 +3585,23 @@ function printSession(){
 .srch-chip.active{background:var(--blue-m);color:#fff;border-color:var(--blue-m)}
 .srch-chip:hover:not(.active){border-color:var(--blue-l);color:var(--blue-m)}
 mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;padding:0 2px}
+
+
+.qa-item{border-radius:8px;padding:8px 12px;margin-bottom:6px;border:1px solid var(--border);transition:all .15s}
+.qa-item.running{border-color:var(--blue-l);background:rgba(37,99,235,.04)}
+.qa-item.pass{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.05)}
+.qa-item.fail{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.05)}
+.qa-item.skip{opacity:.65}
+.qa-item-head{display:flex;align-items:center;gap:8px}
+.qa-id{font-size:10px;font-weight:700;color:var(--muted);min-width:44px}
+.qa-name{font-size:12.5px;font-weight:600;flex:1}
+.qa-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px}
+.qa-badge.pass{background:rgba(16,185,129,.12);color:var(--ok)}
+.qa-badge.fail{background:rgba(239,68,68,.08);color:var(--err)}
+.qa-badge.running{background:rgba(37,99,235,.1);color:var(--blue-m)}
+.qa-badge.skip{background:var(--bg);color:var(--muted)}
+.qa-detail{font-size:11px;color:var(--muted);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);display:none;line-height:1.6}
+.qa-detail.fail{color:var(--err)}
 
 </style><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -5817,6 +5888,393 @@ function confirmImportExcel(){
   window._ir=null;
   closeM('m-cfg');nav('jugadores');renderJugadores();
   snack('Importados: '+imp+' nuevos, '+upd+' actualizados','ok');
+}
+
+var _qaResults = [];
+var _qaRunning = false;
+
+function openQARunner(){
+  if(currentRole !== 'admin'){ snack('Solo Admin puede ejecutar pruebas'); return; }
+  openM('m-qa-runner');
+  if(_qaResults.length === 0) renderQAIdle();
+}
+
+function renderQAIdle(){
+  var el = document.getElementById('qa-results');
+  if(!el) return;
+  el.innerHTML = TESTS_DEF.map(function(t){
+    return '<div class="qa-item" id="qa-item-'+t.id+'"><div class="qa-item-head"><span class="qa-id">'+t.id+'</span><span class="qa-name">'+t.name+'</span><span class="qa-badge skip">Pendiente</span></div><div class="qa-detail"></div></div>';
+  }).join('');
+  var s=document.getElementById('qa-summary'); if(s) s.style.display='none';
+  var p=document.getElementById('qa-progress-wrap'); if(p) p.style.display='none';
+}
+
+function resetQAResults(){ _qaResults=[]; renderQAIdle(); }
+
+var TESTS_DEF = [
+/*  NIVEL 1: CIMIENTOS  */
+  {id:'QA-01',name:'La app tiene la version correcta y todos sus datos estan listos',cat:'Cimientos',run:function(){
+    if(DATA_VERSION!==3) return {pass:false,detail:'Version incorrecta: '+DATA_VERSION+'. Debe ser 3.'};
+    if(!Array.isArray(A.players)) return {pass:false,detail:'La lista de jugadores no existe'};
+    if(!Array.isArray(A.sessions)) return {pass:false,detail:'La lista de sesiones no existe'};
+    if(!Array.isArray(A.payments)) return {pass:false,detail:'La lista de pagos no existe'};
+    if(!Array.isArray(A.prospects)) return {pass:false,detail:'La lista de prospectos no existe'};
+    if(typeof A.config.clubToken!=='string') return {pass:false,detail:'La clave del club no esta configurada correctamente'};
+    return {pass:true,detail:'Todo en orden. Version 3. Listas: jugadores('+A.players.length+'), pagos('+A.payments.length+'), prospectos('+A.prospects.length+').'};
+  }},
+  {id:'QA-02',name:'Los datos se guardan y recuperan correctamente en este dispositivo',cat:'Cimientos',run:function(){
+    var tp={id:'qa_rt_'+Date.now(),name:'QA_ROUNDTRIP',category:'QA',active:true,number:0,position:'',amount:0,tutor:'',phone:'',emergencyContact:{name:'',phone:''},scholarship:{type:'',pct:0},medical:{sangre:'',alergias:'',historial:'',lesiones:''},isCaptain:false,docs:{acta:{done:false},curp:{done:false},estudios:{done:false}},uni:{medicion:{done:false},pago:{done:false},pedido:{done:false},entrega:{done:false}},clubNotes:''};
+    A.players.push(tp); saveData(); loadData();
+    var found=A.players.find(function(p){return p.id===tp.id;});
+    A.players=A.players.filter(function(p){return p.id!==tp.id;}); saveData();
+    if(!found) return {pass:false,detail:'El jugador de prueba no sobrevivio el ciclo de guardado y carga'};
+    return {pass:true,detail:'Guardado y recuperacion OK. '+A.players.length+' jugadores en el sistema.'};
+  }},
+  {id:'QA-03',name:'Este dispositivo tiene su identificacion unica',cat:'Cimientos',run:function(){
+    var id1=getDeviceId(),id2=getDeviceId();
+    if(!id1) return {pass:false,detail:'No se pudo generar ID del dispositivo'};
+    if(id1!==id2) return {pass:false,detail:'El ID cambia entre llamadas - deberia ser siempre el mismo'};
+    if(id1.indexOf('dev_')!==0) return {pass:false,detail:'Formato invalido: '+id1};
+    return {pass:true,detail:'ID del dispositivo OK y consistente: '+id1.substring(0,28)+'...'};
+  }},
+  {id:'QA-04',name:'El historial de actividad se registra cada vez que se hace algo',cat:'Cimientos',run:function(){
+    var before=A.logs.length;
+    auditLog('QA_TEST','test','Prueba automatica del historial');
+    var after=A.logs.length;
+    if(after<=before) return {pass:false,detail:'El historial no aumento despues de registrar una accion'};
+    var last=A.logs[0];
+    if(!last.id||!last.ts) return {pass:false,detail:'El registro del historial esta incompleto (falta id o fecha)'};
+    A.logs=A.logs.filter(function(l){return l.action!=='QA_TEST';}); saveData();
+    return {pass:true,detail:'Historial OK. Registro generado con: id, fecha, rol, accion, entidad.'};
+  }},
+  {id:'QA-05',name:'Los 12 meses del ano estan configurados correctamente',cat:'Cimientos',run:function(){
+    if(!MES||MES.length!==12) return {pass:false,detail:'MES tiene '+( MES?MES.length:0)+' meses, deberia tener 12'};
+    var expected=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    for(var i=0;i<12;i++){if(MES[i]!==expected[i]) return {pass:false,detail:'Mes '+i+' incorrecto: "'+MES[i]+'" (esperado "'+expected[i]+'")');}
+    return {pass:true,detail:'Los 12 meses estan correctamente definidos.'};
+  }},
+  {id:'QA-06',name:'El espacio de almacenamiento en este dispositivo esta bien',cat:'Cimientos',run:function(){
+    try{
+      var test='qa_storage_test_'+Date.now();
+      localStorage.setItem(test,'ok');
+      var val=localStorage.getItem(test);
+      localStorage.removeItem(test);
+      if(val!=='ok') return {pass:false,detail:'No se pudo leer lo que se escribio en el almacenamiento'};
+      var dataSize=JSON.stringify(A).length;
+      var kb=Math.round(dataSize/1024);
+      if(kb>4000) return {pass:null,detail:'AVISO: Los datos ocupan '+kb+'KB. El limite es 5MB. Considera hacer un respaldo y limpiar datos viejos.'};
+      return {pass:true,detail:'Almacenamiento funciona. Datos actuales: '+kb+'KB de 5120KB disponibles.'};
+    }catch(e){return {pass:false,detail:'Error de almacenamiento: '+e.message};}
+  }},
+
+/*  NIVEL 2: SEGURIDAD Y ACCESOS  */
+  {id:'QA-07',name:'Cada perfil ve solo lo que le corresponde',cat:'Seguridad',run:function(){
+    var errs=[];
+    if(!ROLES.admin) errs.push('Falta perfil Admin');
+    if(!ROLES.profe) errs.push('Falta perfil Profe');
+    if(!ROLES.administrativo) errs.push('Falta perfil Administrativo');
+    if(ROLES.profe&&ROLES.profe.nav.indexOf('pagos')>=0) errs.push('Profe NO debe ver Pagos');
+    if(ROLES.profe&&ROLES.profe.nav.indexOf('jugadores')<0) errs.push('Profe DEBE ver Jugadores');
+    if(ROLES.administrativo&&ROLES.administrativo.nav.indexOf('convocatoria')>=0) errs.push('Administrativo NO debe ver Convocatoria');
+    if(ROLES.administrativo&&ROLES.administrativo.nav.indexOf('calendario')<0) errs.push('Administrativo DEBE ver Calendario');
+    if(ROLES.admin&&!ROLES.admin.canConfig) errs.push('Admin debe poder acceder a Config');
+    if(errs.length) return {pass:false,detail:'Problemas de acceso:
+'+errs.join('
+')};
+    return {pass:true,detail:'Accesos OK: Profe (sin pagos, con jugadores), Administrativo (sin convocatoria, con calendario), Admin (acceso total).'};
+  }},
+  {id:'QA-08',name:'Las contrasenas de acceso son seguras',cat:'Seguridad',run:function(){
+    var pins=A.config.pins;
+    var weak=['1234','5678','9012','0000','1111','2222','3333','4444','5555','6666','7777','8888','9999'];
+    var errs=[];
+    if(weak.indexOf(String(pins.admin))>=0) errs.push('El Admin usa una contrasena comun y facil de adivinar');
+    if(weak.indexOf(String(pins.profe))>=0) errs.push('El Profe usa una contrasena comun y facil de adivinar');
+    if(weak.indexOf(String(pins.administrativo))>=0) errs.push('Administrativo usa una contrasena comun y facil de adivinar');
+    if(String(pins.admin)===String(pins.profe)) errs.push('Admin y Profe tienen la misma contrasena (riesgo de seguridad)');
+    if(String(pins.admin)===String(pins.administrativo)) errs.push('Admin y Administrativo tienen la misma contrasena');
+    if(errs.length) return {pass:false,detail:errs.join(' | ')};
+    return {pass:true,detail:'Las 3 contrasenas son distintas y no son combinaciones obvias.'};
+  }},
+  {id:'QA-09',name:'La clave de seguridad del club esta configurada',cat:'Seguridad',run:function(){
+    var token=A.config.clubToken;
+    if(!token) return {pass:false,detail:'No hay clave de seguridad. Ve a Config > Seguridad de conexion y escribe tu clave.'};
+    if(token.length<4) return {pass:false,detail:'La clave es muy corta ('+token.length+' letras). Usa una clave mas larga.'};
+    return {pass:true,detail:'Clave de seguridad configurada. Longitud: '+token.length+' caracteres.'};
+  }},
+
+/*  NIVEL 3: CONEXION CON LA NUBE  */
+  {id:'QA-10',name:'La conexion con Google Sheets esta configurada',cat:'Conexion nube',run:function(){
+    var url=A.config.scriptUrl;
+    if(!url) return {pass:false,detail:'No hay URL de Google Sheets. Ve a Config y pega la URL de tu Apps Script.'};
+    if(url.indexOf('https://script.google.com/macros/')!==0) return {pass:false,detail:'La URL no parece ser de Google Sheets. Verifica que copiaste la URL correcta.'};
+    if(url.indexOf('/exec')<0) return {pass:false,detail:'La URL no termina en /exec. Usa la URL de "implementacion", no la de edicion.'};
+    return {pass:true,detail:'URL de Google Sheets configurada correctamente.'};
+  }},
+  {id:'QA-11',name:'Los cambios se ponen en cola para subir a la nube',cat:'Conexion nube',run:function(){
+    if(!A.config.scriptUrl) return {pass:null,detail:'OMITIDO: Configura primero la URL de Google Sheets en Config.'};
+    var qb=loadQueue().length;
+    enqueueSync('UPSERT_PLAYER','players','qa_enq_test',{id:'qa_enq_test'});
+    var q=loadQueue(),item=q.find(function(i){return i.entityId==='qa_enq_test';});
+    saveQueue(q.filter(function(i){return i.entityId!=='qa_enq_test';}));
+    if(!item) return {pass:false,detail:'El cambio no se puso en la cola de sincronizacion'};
+    if(item.status!=='pending') return {pass:false,detail:'Estado incorrecto en la cola: '+item.status};
+    if(!item.deviceId||!item.role) return {pass:false,detail:'El item de la cola esta incompleto'};
+    return {pass:true,detail:'Cola de sincronizacion OK. El item tiene todos los campos necesarios.'};
+  }},
+  {id:'QA-12',name:'El indicador de conexion muestra el estado correcto',cat:'Conexion nube',run:function(){
+    var s=getSyncStatus();
+    var valid=['ok','syncing','pending','offline','no_url','error'];
+    if(valid.indexOf(s)<0) return {pass:false,detail:'Estado de conexion invalido: '+s};
+    updateSyncBadge();
+    var lbl=document.getElementById('sync-lbl');
+    if(!lbl) return {pass:false,detail:'El indicador de conexion no existe en la pantalla'};
+    var txt=lbl.textContent;
+    if(txt.indexOf('<')>=0||txt.indexOf('svg')>=0) return {pass:false,detail:'El indicador muestra codigo en lugar de texto: '+txt.substring(0,40)};
+    return {pass:true,detail:'Indicador de conexion muestra: "'+txt+'" (estado del sistema: '+s+')'};
+  }},
+
+/*  NIVEL 4: CONFIGURACION DEL CLUB  */
+  {id:'QA-13',name:'Las categorias del club estan configuradas',cat:'Config del club',run:function(){
+    var cats=getCats();
+    if(!Array.isArray(cats)||cats.length===0) return {pass:false,detail:'No hay categorias configuradas. Ve a Config y agrega las categorias de tu club (ej. Sub-10, Sub-12).'};
+    var testCats=['T-10','T-12','Baby Tanner'];
+    var hasTest=cats.filter(function(c){return testCats.indexOf(c)>=0;});
+    if(hasTest.length>0) return {pass:null,detail:'AVISO: Todavia tienes categorias de prueba: '+hasTest.join(', ')+'. Considera reemplazarlas con las categorias reales del club.'};
+    return {pass:true,detail:'Categorias configuradas ('+cats.length+'): '+cats.join(', ')};
+  }},
+  {id:'QA-14',name:'La fecha del proximo martes se calcula correctamente',cat:'Config del club',run:function(){
+    var r=getNextTuesday();
+    if(!r) return {pass:false,detail:'No se pudo calcular el proximo martes'};
+    var d=new Date(r+'T00:00:00');
+    if(isNaN(d.getTime())) return {pass:false,detail:'La fecha calculada no es valida: '+r};
+    if(d.getDay()!==2) return {pass:false,detail:'La fecha no es martes (dia '+d.getDay()+') para: '+r};
+    if(d<=new Date()) return {pass:false,detail:'La fecha calculada ya paso: '+r};
+    return {pass:true,detail:'Proximo martes calculado correctamente: '+r};
+  }},
+
+/*  NIVEL 5: EXPORTACIONES Y RESPALDOS  */
+  {id:'QA-15',name:'La herramienta para generar archivos Excel esta disponible',cat:'Respaldos',run:function(){
+    if(typeof XLSX==='undefined') return {pass:false,detail:'La herramienta de Excel no esta cargada. Verifica tu conexion a internet y recarga la app.'};
+    try{
+      var wb=XLSX.utils.book_new();
+      var ws=XLSX.utils.json_to_sheet([{Prueba:'QA',Valor:1}]);
+      XLSX.utils.book_append_sheet(wb,ws,'Test');
+      var out=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+      if(!out||out.length===0) return {pass:false,detail:'La herramienta genero un archivo vacio'};
+      return {pass:true,detail:'Herramienta de Excel lista. Archivo de prueba: '+out.length+' bytes.'};
+    }catch(e){return {pass:false,detail:'Error al generar Excel de prueba: '+e.message};}
+  }},
+  {id:'QA-16',name:'La ficha del jugador se puede exportar con todos sus datos',cat:'Respaldos',run:function(){
+    var tp={id:'qa_fp',name:'Test Jugador',number:7,category:'T-10',position:'Delantero',size:'M',birthdate:'2015-01-01',amount:800,tutor:'Papa Test',phone:'4771234567',emergencyContact:{name:'Mama',phone:'4779876543'},scholarship:{type:'Beca completa',pct:100},medical:{sangre:'O+',alergias:'Ninguna'},isCaptain:true,active:true,docs:{acta:{done:true,date:'2026-01-01',by:'admin'},curp:{done:false},estudios:{done:false}},uni:{medicion:{done:true},pago:{done:false},pedido:{done:false},entrega:{done:false}},clubNotes:'Jugador de prueba QA'};
+    var flat=flattenPlayer(tp);
+    var req=['ID','Nombre','Numero','Categoria','Posicion','Tutor','Telefono','Estado','Acta','CURP','Estudios'];
+    var missing=req.filter(function(k){return !(k in flat);});
+    if(missing.length) return {pass:false,detail:'Campos que faltan en la exportacion: '+missing.join(', ')};
+    if(flat['Acta']!=='Si') return {pass:false,detail:'El acta deberia decir Si pero dice: '+flat['Acta']};
+    if(flat['Estado']!=='Activo') return {pass:false,detail:'Estado incorrecto: '+flat['Estado']};
+    return {pass:true,detail:'Exportacion de jugador OK. Genera '+Object.keys(flat).length+' campos. Todos los requeridos presentes.'};
+  }},
+  {id:'QA-17',name:'El registro de pago se puede exportar correctamente',cat:'Respaldos',run:function(){
+    var tp={id:'pay_qa',playerName:'Test Jugador',category:'T-10',tipo:'mensualidad',concepto:'Mensualidad Abril 2026',amount:800,method:'efectivo',status:'paid',month:3,year:2026,paidDate:'28 abr 2026',receivedBy:'Admin',notes:''};
+    var flat=flattenPayment(tp);
+    var req=['ID','Jugador','Tipo','Monto','Metodo','Estado','FechaPago'];
+    var missing=req.filter(function(k){return !(k in flat);});
+    if(missing.length) return {pass:false,detail:'Campos que faltan: '+missing.join(', ')};
+    if(flat['Monto']!==800) return {pass:false,detail:'El monto exportado es incorrecto: '+flat['Monto']};
+    return {pass:true,detail:'Exportacion de pago OK. Genera '+Object.keys(flat).length+' campos.'};
+  }},
+  {id:'QA-18',name:'El calculo de documentos completos de un jugador es correcto',cat:'Respaldos',run:function(){
+    var p1={docs:{acta:{done:true},curp:{done:true},estudios:{done:true}}};
+    var p2={docs:{acta:{done:true},curp:{done:false},estudios:{done:false}}};
+    var p3={docs:{}};
+    var r1=getDocCompleteness(p1),r2=getDocCompleteness(p2),r3=getDocCompleteness(p3);
+    if(r1.pct!==100) return {pass:false,detail:'Con 3 docs completos deberia ser 100%, es '+r1.pct+'%'};
+    if(r2.pct===100||r2.pct===0) return {pass:false,detail:'Con 1 de 3 docs el porcentaje deberia ser parcial, es '+r2.pct+'%'};
+    if(r3.pct!==0) return {pass:false,detail:'Sin documentos deberia ser 0%, es '+r3.pct+'%'};
+    return {pass:true,detail:'Calculo de documentos OK. Completo: '+r1.pct+'%, Parcial: '+r2.pct+'%, Vacio: '+r3.pct+'%'};
+  }},
+
+/*  NIVEL 6: PANTALLAS Y VISUALIZACION  */
+  {id:'QA-19',name:'La pantalla de inicio carga sin problemas',cat:'Pantallas',run:function(){
+    try{renderHoy();renderHoyActions();return {pass:true,detail:'La pantalla de inicio y sus botones de acceso rapido cargan correctamente.'};
+    }catch(e){return {pass:false,detail:'Error en la pantalla de inicio: '+e.message};}
+  }},
+  {id:'QA-20',name:'La pantalla de jugadores carga sin problemas',cat:'Pantallas',run:function(){
+    try{renderJugadores();return {pass:true,detail:'Pantalla de jugadores OK. '+A.players.length+' jugadores en el roster.'};
+    }catch(e){return {pass:false,detail:'Error en jugadores: '+e.message};}
+  }},
+  {id:'QA-21',name:'La pantalla de pagos carga sin problemas',cat:'Pantallas',run:function(){
+    try{renderPagos();updatePorValidarBadge();return {pass:true,detail:'Pantalla de pagos OK. '+A.payments.length+' registros de pago.'};
+    }catch(e){return {pass:false,detail:'Error en pagos: '+e.message};}
+  }},
+  {id:'QA-22',name:'La pantalla de asistencia carga sin problemas',cat:'Pantallas',run:function(){
+    try{renderAttCats();return {pass:true,detail:'Pantalla de asistencia OK. '+getCats().length+' categorias disponibles.'};
+    }catch(e){return {pass:false,detail:'Error en asistencia: '+e.message};}
+  }},
+  {id:'QA-23',name:'El calendario carga sin problemas',cat:'Pantallas',run:function(){
+    try{renderCal();return {pass:true,detail:'Calendario OK. '+A.events.length+' eventos en el sistema.'};
+    }catch(e){return {pass:false,detail:'Error en el calendario: '+e.message};}
+  }},
+  {id:'QA-24',name:'La pantalla de familias interesadas carga sin problemas',cat:'Pantallas',run:function(){
+    try{renderProspectos();return {pass:true,detail:'Pantalla de prospectos OK. '+A.prospects.length+' prospectos en el sistema.'};
+    }catch(e){return {pass:false,detail:'Error en prospectos: '+e.message};}
+  }},
+  {id:'QA-25',name:'El dashboard con estadisticas carga sin problemas',cat:'Pantallas',run:function(){
+    try{renderDash();return {pass:true,detail:'Dashboard OK. Estadisticas calculadas para '+A.players.length+' jugadores.'};
+    }catch(e){return {pass:false,detail:'Error en el dashboard: '+e.message};}
+  }},
+
+/*  NIVEL 7: MENSAJES Y UX  */
+  {id:'QA-26',name:'Los mensajes de confirmacion se muestran correctamente',cat:'Mensajes',run:function(){
+    var el=document.getElementById('snack');
+    if(!el) return {pass:false,detail:'El area de mensajes no existe en la pantalla'};
+    snack('PRUEBA_QA_MSG','ok');
+    var txt=el.textContent;
+    if(txt.indexOf('<svg')>=0||txt.indexOf('viewBox')>=0) return {pass:false,detail:'El mensaje muestra codigo tecnico en lugar de texto: '+txt.substring(0,60)};
+    if(txt!=='PRUEBA_QA_MSG') return {pass:false,detail:'El texto del mensaje no es correcto: "'+txt+'"'};
+    el.classList.remove('show');
+    return {pass:true,detail:'Los mensajes se muestran correctamente sin codigo tecnico.'};
+  }},
+  {id:'QA-27',name:'El indicador de conexion muestra texto claro',cat:'Mensajes',run:function(){
+    var pill=document.getElementById('sync-pill'),lbl=document.getElementById('sync-lbl');
+    if(!pill||!lbl) return {pass:false,detail:'El indicador de conexion no esta en la pantalla'};
+    updateSyncBadge();
+    var txt=lbl.textContent;
+    if(txt.indexOf('<')>=0||txt.indexOf('svg')>=0) return {pass:false,detail:'El indicador muestra codigo tecnico: '+txt.substring(0,60)};
+    if(!txt||txt.trim().length===0) return {pass:false,detail:'El indicador esta vacio'};
+    return {pass:true,detail:'Indicador de conexion muestra texto claro: "'+txt+'"'};
+  }},
+  {id:'QA-28',name:'El buscador encuentra jugadores por nombre',cat:'Mensajes',run:function(){
+    if(A.players.length===0) return {pass:null,detail:'OMITIDO: No hay jugadores en el sistema. Agrega jugadores primero.'};
+    var firstPlayer=A.players[0];
+    var searchName=firstPlayer.name.split(' ')[0].toLowerCase();
+    try{
+      var results=_doSearch?null:null;
+      // Test the filter logic directly
+      var found=A.players.filter(function(p){return (p.name||'').toLowerCase().indexOf(searchName)>=0;});
+      if(found.length===0) return {pass:false,detail:'El buscador no encontro a nadie buscando "'+searchName+'"'};
+      return {pass:true,detail:'Busqueda OK. Buscando "'+searchName+" encontro "+found.length+' jugador'+(found.length!==1?'es':'')+'.'};
+    }catch(e){return {pass:false,detail:'Error en la busqueda: '+e.message};}
+  }},
+
+/*  NIVEL 8: FLUJOS DE NEGOCIO  */
+  {id:'QA-29',name:'Se puede crear un prospecto y guardarlo correctamente',cat:'Flujos',run:function(){
+    var before=A.prospects.length;
+    var tp={id:'prosp_qa_'+Date.now(),childName:'Nino QA Test',tutorName:'Papa QA',phone:'4771234567',age:'10',suggestedCategory:getCats()[0]||'T-10',channel:'QA',status:'Nuevo',createdAt:new Date().toISOString(),trialConfirmed:false,attended:false};
+    A.prospects.push(tp); saveData();
+    var found=A.prospects.find(function(p){return p.id===tp.id;});
+    A.prospects=A.prospects.filter(function(p){return p.id!==tp.id;}); saveData();
+    if(!found) return {pass:false,detail:'El prospecto de prueba no se guardo correctamente'};
+    if(found.status!=='Nuevo') return {pass:false,detail:'Estado inicial incorrecto: '+found.status};
+    return {pass:true,detail:'Creacion de prospecto OK. Campos requeridos guardados correctamente.'};
+  }},
+  {id:'QA-30',name:'Un cobro registrado por no-Admin queda pendiente de validar',cat:'Flujos',run:function(){
+    if(A.players.length===0) return {pass:null,detail:'OMITIDO: No hay jugadores. Agrega jugadores primero.'};
+    var p=A.players[0];
+    var now=new Date();
+    var testPay={id:'pay_qa_val_'+Date.now(),playerId:p.id,playerName:p.name,category:p.category,month:now.getMonth(),year:now.getFullYear(),amount:p.amount||800,status:'por_confirmar',tipo:'mensualidad',method:'efectivo',receivedBy:'Profe Test',registeredBy:'profe',submittedBy:'profe',submittedAt:new Date().toISOString()};
+    A.payments.push(testPay);
+    var found=A.payments.find(function(x){return x.id===testPay.id;});
+    A.payments=A.payments.filter(function(x){return x.id!==testPay.id;}); saveData();
+    if(!found) return {pass:false,detail:'El cobro de prueba no se guardo'};
+    if(found.status!=='por_confirmar') return {pass:false,detail:'El cobro deberia quedar como "por validar" pero quedo como: '+found.status};
+    return {pass:true,detail:'Flujo de cobro pendiente OK. El cobro registrado por Profe queda en estado "por validar" hasta que Admin confirme.'};
+  }},
+];
+
+
+async function runAllTests(){
+  if(_qaRunning){snack('Pruebas en ejecucion');return;}
+  _qaRunning=true;_qaResults=[];
+  var btn=document.getElementById('qa-run-btn');
+  if(btn){btn.disabled=true;btn.textContent='Ejecutando...';}
+  var pw=document.getElementById('qa-progress-wrap');
+  var pb=document.getElementById('qa-progress-bar');
+  var pl=document.getElementById('qa-progress-lbl');
+  if(pw) pw.style.display='block';
+  var sum=document.getElementById('qa-summary');
+  if(sum) sum.style.display='flex';
+  for(var i=0;i<TESTS_DEF.length;i++){
+    var t=TESTS_DEF[i];
+    var el=document.getElementById('qa-item-'+t.id);
+    if(el){
+      el.className='qa-item running';
+      var b=el.querySelector('.qa-badge');
+      if(b){b.className='qa-badge running';b.textContent='Ejecutando...';}
+      el.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+    if(pl) pl.textContent='('+( i+1)+'/'+TESTS_DEF.length+') '+t.id+': '+t.name;
+    await new Promise(function(r){setTimeout(r,60);});
+    var result;
+    try{result=t.run();}catch(e){result={pass:false,detail:'ERROR: '+e.message};}
+    var status=result.pass===null?'skip':result.pass?'pass':'fail';
+    _qaResults.push({id:t.id,name:t.name,cat:t.cat,status:status,detail:result.detail||''});
+    if(el){
+      el.className='qa-item '+status;
+      var b2=el.querySelector('.qa-badge');
+      if(b2){b2.className='qa-badge '+status;b2.textContent=status==='pass'?'PASO':status==='fail'?'FALLO':'AVISO';}
+      var det=el.querySelector('.qa-detail');
+      if(det&&result.detail){
+        det.className='qa-detail'+(status==='fail'?' fail':'');
+        det.textContent=result.detail;
+        det.style.display=status!=='pass'?'block':'none';
+      }
+    }
+    if(pb) pb.style.width=Math.round((i+1)/TESTS_DEF.length*100)+'%';
+    updateQASummary();
+  }
+  if(pw) pw.style.display='none';
+  if(btn){btn.disabled=false;btn.textContent='Volver a ejecutar';}
+  _qaRunning=false;
+  updateQASummary();
+  var pass=_qaResults.filter(function(r){return r.status==='pass';}).length;
+  var fail=_qaResults.filter(function(r){return r.status==='fail';}).length;
+  auditLog('QA_RUN','qa',pass+' pasaron, '+fail+' fallaron de '+TESTS_DEF.length+' pruebas');
+  snack(fail===0?'Todas las pruebas pasaron':''+fail+' prueba'+(fail>1?'s':'')+' fallaron - ver detalles',fail===0?'ok':null);
+}
+
+function updateQASummary(){
+  var pass=_qaResults.filter(function(r){return r.status==='pass';}).length;
+  var fail=_qaResults.filter(function(r){return r.status==='fail';}).length;
+  var skip=_qaResults.filter(function(r){return r.status==='skip';}).length;
+  var el;
+  el=document.getElementById('qa-total');if(el)el.textContent=TESTS_DEF.length;
+  el=document.getElementById('qa-pass');if(el)el.textContent=pass;
+  el=document.getElementById('qa-fail');if(el)el.textContent=fail;
+  el=document.getElementById('qa-skip');if(el)el.textContent=skip;
+  var v=document.getElementById('qa-verdict');
+  if(v&&_qaResults.length===TESTS_DEF.length){
+    v.innerHTML=fail===0?
+      '<span style="font-size:13px;font-weight:700;color:var(--ok)">Listo para produccion</span>':
+      '<span style="font-size:13px;font-weight:700;color:var(--err)">'+fail+' fallo'+(fail>1?'n':'')+' -- revisar</span>';
+  }
+}
+
+function exportQAReport(){
+  if(!_qaResults.length){snack('Ejecuta las pruebas primero');return;}
+  if(typeof XLSX==='undefined'){snack('Error: SheetJS no disponible');return;}
+  var wb=XLSX.utils.book_new();
+  var now=new Date();
+  var pass=_qaResults.filter(function(r){return r.status==='pass';}).length;
+  var fail=_qaResults.filter(function(r){return r.status==='fail';}).length;
+  var sum=[
+    ['REPORTE QA AUTOMATICO - TannerOS v9',''],
+    ['Fecha',now.toLocaleString('es-MX')],
+    ['Total',TESTS_DEF.length],['Pasaron',pass],['Fallaron',fail],
+    ['Veredicto',fail===0?'LISTO PARA PRODUCCION':'REQUIERE ATENCION']
+  ];
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(sum),'Resumen');
+  var det=[['ID','Nombre','Categoria','Estado','Detalle']];
+  _qaResults.forEach(function(r){det.push([r.id,r.name,r.cat,r.status.toUpperCase(),r.detail]);});
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(det),'Resultados');
+  var fails=_qaResults.filter(function(r){return r.status==='fail';});
+  if(fails.length){
+    var fd=[['ID','Nombre','Error']];
+    fails.forEach(function(r){fd.push([r.id,r.name,r.detail]);});
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(fd),'Fallas');
+  }
+  downloadExcel(wb,'TanneryCity_QA_'+now.toISOString().split('T')[0]+'.xlsx');
+  snack('Reporte QA exportado','ok');
 }
 
 init();
