@@ -5126,7 +5126,7 @@ async function processSyncQueue(){
   _syncRunning=true;updateSyncBadge();
   for(const item of pending.slice(0,10)){
     try{
-      await fetch(A.config.scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({token:A.config.clubToken||'',action:item.action,entity:item.entity,entityId:item.entityId,data:item.payload,deviceId:item.deviceId,role:item.role,sentAt:new Date().toISOString()})});
+      await fetch(A.config.scriptUrl,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({token:A.config.clubToken||'',action:item.action,entity:item.entity,entityId:item.entityId,data:item.payload,deviceId:item.deviceId,role:item.role,sentAt:new Date().toISOString()})});
       markSyncSuccess(item.id);
     }catch(err){markSyncError(item.id,err.message||'Error de red');}
   }
@@ -7883,7 +7883,7 @@ function sendBugReport(){
     };
     fetch(A.config.scriptUrl, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'text/plain'},
       body: JSON.stringify(payload)
     }).then(function(){ }).catch(function(){});
   }
@@ -8014,7 +8014,7 @@ function sendInternalNotif(){
     };
     fetch(A.config.scriptUrl, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'text/plain'},
       body: JSON.stringify(payload)
     }).then(function(){}).catch(function(){});
   }
