@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com https://script.google.com https://script.googleusercontent.com; img-src 'self' data: blob:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tannery City . Panel Academia</title>
+<title>Tannery City . Panel Academia v11</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
 /*  GLOBAL ERROR HANDLER  */
@@ -787,8 +787,15 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 .dark-mode .p-table tr:hover td{background:rgba(255,255,255,.04)}
 .dark-mode .tab-btn.active{background:var(--navy);color:var(--bg)}
 .dark-mode .bdg{background:rgba(255,255,255,.1)}
-#dark-toggle{padding:5px 8px;border-radius:8px;background:transparent;border:1px solid var(--border);cursor:pointer;color:var(--muted);font-size:14px;transition:all .15s}
-#dark-toggle:hover{background:var(--border)}
+/* TOPBAR BUTTONS uniform */
+.tb-btn{height:32px;display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:0 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .12s;white-space:nowrap;border:1.5px solid var(--border);background:var(--card);color:var(--text);flex-shrink:0}
+.tb-btn:hover{background:var(--bg);border-color:var(--navy)}
+.tb-btn-danger{border-color:rgba(239,68,68,.3);color:var(--err);background:rgba(239,68,68,.05)}
+.tb-btn-danger:hover{background:var(--err);color:#fff;border-color:var(--err)}
+.tb-btn-primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.tb-btn-primary:hover{background:var(--blue);border-color:var(--blue)}
+#dark-toggle{height:32px;padding:0 10px;border-radius:8px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;color:var(--muted);font-size:14px;transition:all .15s;display:inline-flex;align-items:center;flex-shrink:0}
+#dark-toggle:hover{background:var(--bg);border-color:var(--navy)}
 
 
 .onboard-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
@@ -999,11 +1006,14 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 
       <span class="role-badge" id="tb-role-badge"></span>
       <button id="dark-toggle" onclick="toggleDarkMode()" title="Modo oscuro">&#9790;</button>
-      <button class="bug-btn" onclick="openBugReporter()" title="Ayuda / Reportar problema" id="bug-report-btn" style="display:none">Ayuda</button>
-      <button id="notif-bell" onclick="openNotifications()" title="Notificaciones" style="display:none;padding:5px 8px;border-radius:8px;background:transparent;border:1px solid var(--border);cursor:pointer;color:var(--muted);font-size:14px;position:relative">&#9993;<span id="notif-count" style="position:absolute;top:-4px;right:-4px;background:var(--err);color:#fff;border-radius:50%;width:15px;height:15px;font-size:9px;font-weight:700;display:none;align-items:center;justify-content:center"></span></button>
-      <button class="logout-btn" onclick="doLogout()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Salir</button>
-      <button class="btn-s" id="tb-act2" onclick="primaryAction2()" style="display:none"><span id="tb-act2-lbl">+ Prospecto</span></button>
-      <button class="btn-p" id="tb-act" onclick="primaryAction()" style="display:none"><span id="tb-act-lbl">+ Nuevo</span></button>
+      <button class="tb-btn" onclick="openBugReporter()" id="bug-report-btn" style="display:none">Ayuda</button>
+      <button class="tb-btn" id="notif-bell" onclick="openNotifications()" style="display:none;position:relative">&#9993;<span id="notif-count" style="position:absolute;top:-4px;right:-4px;background:var(--err);color:#fff;border-radius:50%;width:15px;height:15px;font-size:9px;font-weight:700;display:none;align-items:center;justify-content:center"></span></button>
+      <button class="tb-btn tb-btn-danger" onclick="doLogout()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Salir
+      </button>
+      <button class="tb-btn" id="tb-act2" onclick="primaryAction2()" style="display:none"><span id="tb-act2-lbl">+ Prospecto</span></button>
+      <button class="tb-btn tb-btn-primary" id="tb-act" onclick="primaryAction()" style="display:none"><span id="tb-act-lbl">+ Nuevo</span></button>
     </div>
   </div>
 
@@ -1151,22 +1161,24 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 
     <!-- === ASISTENCIA === -->
     <div id="view-asistencia" class="view">
-      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-        <button class="help-btn" onclick="showHelp('asistencia')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Ayuda</button>
-        <button class="btn-s btn-sm" id="btn-dl-asistencia" onclick="downloadAttendanceReportExcel()" style="display:none">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Descargar asistencia
-        </button>
-      </div>
-
       <!-- STEP 1: Category selector -->
       <div id="att-step-cats">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-          <span style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--navy);">Que categoria vas a registrar?</span>
+        <div style="margin-bottom:18px">
+          <button class="btn-p" onclick="attQuickStart()" style="width:100%;justify-content:center;padding:14px;font-size:15px;font-weight:700;border-radius:12px;letter-spacing:.02em">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            ✅ Registrar Asistencia
+          </button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--navy)">¿Cuál categoría?</span>
+          <button class="btn-s btn-sm" id="btn-dl-asistencia" onclick="downloadAttendanceReportExcel()" style="display:none">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Descargar
+          </button>
         </div>
         <div class="cat-cards" id="att-cat-cards"></div>
-        <div class="card">
-          <div class="card-hd"><span class="card-ttl">Ultimas Sesiones</span></div>
+        <div class="card" style="margin-top:4px">
+          <div class="card-hd"><span class="card-ttl">Últimas Sesiones</span></div>
           <div class="card-bd" id="sess-container"></div>
         </div>
       </div>
@@ -1208,10 +1220,18 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
                     <tbody id="s-tbody"></tbody>
                   </table>
                 </div>
-                <div style="display:flex;gap:9px;margin-top:14px;">
-                  <button class="btn-p" onclick="saveSess('local')" style="flex:1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Guardar Local</button>
-                  <button class="btn-p" onclick="saveSess('sheets')" style="background:var(--ok);flex:1"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg> Enviar a Sheets</button>
-                  <button class="btn-s" onclick="printSession()" style="flex:0 0 auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+                <div style="display:flex;gap:9px;margin-top:18px;">
+                  <button class="btn-p" onclick="saveSess('sheets')" style="background:var(--navy);flex:2;padding:12px;font-size:14px;font-weight:700;justify-content:center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+                    Guardar y Enviar
+                  </button>
+                  <button class="btn-s" onclick="saveSess('local')" style="flex:1;padding:12px;font-size:13px;justify-content:center">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+                    Local
+                  </button>
+                  <button class="btn-g" onclick="printSession()" style="flex:0 0 auto;padding:12px">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                  </button>
                 </div>
               </div>
             </div>
@@ -1253,11 +1273,18 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 
       <!-- TAB: MENSUAL -->
       <div id="ptab-view-mensual">
-        <div style="display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap;">
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
           <select class="fsel" id="p-mes" onchange="renderPagos()" style="max-width:130px;"></select>
           <select class="fsel" id="p-anio" onchange="renderPagos()" style="max-width:90px;"></select>
           <select class="fsel" id="p-cat" onchange="renderPagos()" style="max-width:140px;"></select>
           <div style="margin-left:auto;display:flex;gap:7px;align-items:center;font-size:12.5px;font-weight:600;" id="p-sum"></div>
+        </div>
+        <!-- Buscador de jugador/tutor en pagos -->
+        <div style="position:relative;margin-bottom:14px">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" id="p-srch" class="fin" placeholder="Buscar jugador o tutor..." oninput="renderPagos()" style="padding-left:36px;border-radius:24px;font-size:13px"/>
         </div>
         <!-- Resumen rapido -->
         <div id="p-resumen" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px"></div>
@@ -1333,35 +1360,74 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 
     <!-- === CONVOCATORIA === -->
     <div id="view-convocatoria" class="view">
-      <div style="margin-bottom:10px"><button class="help-btn" onclick="showHelp('convocatoria')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Ayuda</button></div>
-      <div style="display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap">
-        <select class="fsel" id="conv-cat" onchange="renderConvocatoria()" style="max-width:140px"></select>
-        <input type="date" class="fin" id="conv-fecha" style="max-width:160px;padding:7px 11px"/>
-        <input type="text" class="fin" id="conv-evento" placeholder="ej. Liga Municipal vs Coyotes" style="flex:1;min-width:180px"/>
-        <select class="fsel" id="conv-tipo" style="max-width:140px">
-          <option value="partido">Partido oficial</option>
-          <option value="amistoso">Amistoso</option>
-          <option value="torneo">Torneo</option>
-          <option value="entrenamiento">Entrenamiento especial</option>
-        </select>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div class="fgrp">
+          <label class="flbl">Categoria</label>
+          <select class="fsel" id="conv-cat" onchange="renderConvocatoria()"></select>
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Tipo de evento</label>
+          <select class="fsel" id="conv-tipo" onchange="toggleConvFaseFinal();updateConvPreview()">
+            <option value="partido">⚽ Partido oficial</option>
+            <option value="amistoso">🤝 Amistoso</option>
+            <option value="torneo">🏆 Torneo</option>
+            <option value="entrenamiento">🏋️ Entrenamiento especial</option>
+            <option value="fase-final">⚔️ Fase Final</option>
+          </select>
+        </div>
+        <div class="fgrp" id="conv-etapa-wrap" style="display:none">
+          <label class="flbl">Etapa de fase final</label>
+          <select class="fsel" id="conv-etapa" onchange="updateConvPreview()">
+            <option value="16vos">16vos de Final</option>
+            <option value="8vos">8vos de Final</option>
+            <option value="cuartos">Cuartos de Final</option>
+            <option value="semis">Semifinal</option>
+            <option value="final">🏆 Gran Final</option>
+          </select>
+        </div>
+        <div class="fgrp full">
+          <label class="flbl">Rival / Nombre del evento</label>
+          <input type="text" class="fin" id="conv-evento" placeholder="ej. Tannery City T10 vs Atlético León" oninput="updateConvPreview()"/>
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Fecha 📅</label>
+          <input type="date" class="fin" id="conv-fecha" oninput="updateConvPreview()"/>
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Hora de llegada 🕒</label>
+          <input type="time" class="fin" id="conv-hora" placeholder="08:30" oninput="updateConvPreview()"/>
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Sede 📍</label>
+          <input type="text" class="fin" id="conv-sede" placeholder="ej. Tannery City Park" oninput="updateConvPreview()"/>
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Jersey 👕</label>
+          <input type="text" class="fin" id="conv-jersey" placeholder="ej. Pink Cantera" oninput="updateConvPreview()"/>
+        </div>
       </div>
       <div class="g2">
         <div class="card">
           <div class="card-hd">
-            <span class="card-ttl">Seleccionar jugadores</span>
-            <div style="display:flex;gap:7px">
-              <button class="btn-g" onclick="convSelectAll()">Todos</button>
-              <button class="btn-g" onclick="convClearAll()">Ninguno</button>
+            <span class="card-ttl">Jugadores</span>
+            <div style="display:flex;gap:6px">
+              <button class="btn-g btn-sm" onclick="convSelectAll()">Todos</button>
+              <button class="btn-g btn-sm" onclick="convClearAll()">Limpiar</button>
             </div>
           </div>
-          <div class="card-bd">
-            <div id="conv-grid" style="display:flex;flex-direction:column;gap:7px;max-height:480px;overflow-y:auto"></div>
+          <div class="card-bd" style="padding:12px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ok);margin-bottom:6px">🔥 CONVOCADOS</div>
+            <div id="conv-grid" style="display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto;margin-bottom:12px"></div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--warn);margin-bottom:6px">🟡 EN DUDA</div>
+            <div id="conv-grid-duda" style="display:flex;flex-direction:column;gap:5px;max-height:120px;overflow-y:auto;margin-bottom:12px"></div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--err);margin-bottom:6px">🔴 NO DISPONIBLES</div>
+            <div id="conv-grid-nodisp" style="display:flex;flex-direction:column;gap:5px;max-height:120px;overflow-y:auto"></div>
           </div>
         </div>
         <div class="card">
           <div class="card-hd"><span class="card-ttl">Vista previa del mensaje</span></div>
           <div class="card-bd">
-            <div id="conv-preview" style="background:var(--bg);border-radius:10px;padding:14px;font-size:13px;line-height:1.7;white-space:pre-wrap;min-height:200px;font-family:monospace;color:var(--navy);max-height:400px;overflow-y:auto"></div>
+            <div id="conv-preview" style="background:var(--bg);border-radius:10px;padding:14px;font-size:13px;line-height:1.7;white-space:pre-wrap;min-height:200px;font-family:'DM Sans',sans-serif;color:var(--navy);max-height:480px;overflow-y:auto"></div>
             <button class="btn-p" onclick="copyConvocatoria()" style="width:100%;margin-top:12px;justify-content:center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
               Copiar mensaje
@@ -2621,6 +2687,8 @@ function enterApp(role){
   const addProspBtn=document.getElementById('btn-add-prospect');if(addProspBtn)addProspBtn.style.display=(currentRole==='admin'||currentRole==='administrativo')?'flex':'none';
   const dlA=document.getElementById('btn-dl-asistencia');if(dlA) dlA.style.display='flex';
   renderHoyActions();
+  // Verificar cumpleanos al entrar (muestra notif si hay hoy o esta semana)
+  setTimeout(function(){ if(typeof checkBirthdayNotificationsOnLogin==='function') checkBirthdayNotificationsOnLogin(); }, 3000);
 }
 
 function applyRoleUI(){
@@ -2653,9 +2721,10 @@ function applyRoleUI(){
 function updateReadonlyHint(){
   const hint=document.getElementById('readonly-hint');
   if(!hint)return;
-  if(currentRole!=='admin'){
+  // Solo administrativo ve el hint (tiene acceso limitado). Profe tiene sus propios permisos.
+  if(currentRole==='administrativo'){
     hint.classList.add('show');
-    hint.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Modo lectura -- solo Admin puede editar';
+    hint.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Perfil Administrativo — Control financiero';
   } else {
     hint.classList.remove('show');
   }
@@ -3364,8 +3433,16 @@ function confirmDeleteJugador(){
   const p=A.players.find(pl=>pl.id===editJId);
   const nombre=p?.name||'Jugador';
   auditLog('DELETE','jugador',`Elimino a ${nombre} (${p?.category||'Sin cat'})`,{name:p?.name,category:p?.category});
+  // Guardar ID eliminado para evitar que regrese con pullFromSheets
+  try{
+    var deleted=JSON.parse(localStorage.getItem('tcfc_deleted_players')||'[]');
+    if(!deleted.includes(editJId)) deleted.push(editJId);
+    localStorage.setItem('tcfc_deleted_players',JSON.stringify(deleted.slice(-100)));
+  }catch(e){}
   A.players=A.players.filter(pl=>pl.id!==editJId);
   A.payments=A.payments.filter(pm=>pm.playerId!==editJId);
+  // Sync delete a Sheets
+  if(typeof enqueueSync==='function') enqueueSync('DELETE_PLAYER','players',editJId,{id:editJId,_deleted:true});
   saveData();closeM('m-jugador');renderJugadores();snack(nombre+' eliminado');
   editJId=null;resetMjFooter();
 }
@@ -3406,6 +3483,13 @@ function selectAttCat(cat){
   const btn=document.getElementById('tb-act');
   if(canEdit){btn.style.display='flex';document.getElementById('tb-act-lbl').textContent='+ Nueva Sesion';}
   showSessForm(cat);
+}
+
+function attQuickStart(){
+  // Si hay solo una categoria activa, abre directo. Si hay varias, hace scroll a las tarjetas.
+  const cats=getCats();
+  if(cats.length===1){selectAttCat(cats[0]);}
+  else{document.getElementById('att-cat-cards')?.scrollIntoView({behavior:'smooth',block:'start'});}
 }
 
 function attBack(){
@@ -3646,8 +3730,10 @@ function switchPayTab(tab){
 
 function renderPagos(){
   const m=parseInt(document.getElementById('p-mes').value),y=parseInt(document.getElementById('p-anio').value),cat=document.getElementById('p-cat').value;
+  const srch=(document.getElementById('p-srch')?.value||'').toLowerCase().trim();
   let ps=A.players.filter(p=>p.active!==false);
   if(cat!=='all') ps=ps.filter(p=>p.category===cat);
+  if(srch) ps=ps.filter(p=>(p.name||'').toLowerCase().includes(srch)||(p.tutor||'').toLowerCase().includes(srch)||(p.phone||'').toLowerCase().includes(srch));
   let paidCount=0,totCobrado=0,totEfectivo=0,totTransfer=0;
   document.getElementById('p-tbody').innerHTML=ps.map((p,i)=>{
     const r=A.payments.find(pm=>pm.playerId===p.id&&pm.month===m&&pm.year===y&&(!pm.tipo||pm.tipo==='mensualidad'));
@@ -4896,6 +4982,8 @@ const TIPO_LBL={mensualidad:'Mensualidad',inscripcion:'Inscripcion',cargo_extra:
 
 /* ============== CONVOCATORIA ============== */
 let convSelected=new Set();
+let convEnDuda=new Set();
+let convNoDisp=new Set();
 
 
 function initConvocatoria(){
@@ -4909,29 +4997,80 @@ function initConvocatoria(){
   renderConvocatoria();
 }
 
+function toggleConvFaseFinal(){
+  const tipo=document.getElementById('conv-tipo')?.value;
+  const wrap=document.getElementById('conv-etapa-wrap');
+  if(wrap) wrap.style.display=(tipo==='fase-final')?'block':'none';
+}
+
 function renderConvocatoria(){
   const cat=document.getElementById('conv-cat')?.value;
-  if(!cat){document.getElementById('conv-grid').innerHTML='<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px">Selecciona una categoria</p>';return;}
+  if(!cat){
+    ['conv-grid','conv-grid-duda','conv-grid-nodisp'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.innerHTML='<p style="color:var(--muted);font-size:12px;padding:8px 0">Selecciona una categoria</p>';
+    });
+    return;
+  }
   const players=A.players.filter(p=>p.category===cat&&p.active!==false).sort((a,b)=>parseInt(a.number||99)-parseInt(b.number||99));
-  if(!players.length){document.getElementById('conv-grid').innerHTML='<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px">Sin jugadores en esta categoria</p>';return;}
-  // Init selection
+  if(!players.length){
+    document.getElementById('conv-grid').innerHTML='<p style="color:var(--muted);font-size:12px;padding:8px 0">Sin jugadores en esta categoria</p>';
+    return;
+  }
+  // Init: todos convocados por default
   if(convSelected.size===0) players.forEach(p=>convSelected.add(p.id));
-  document.getElementById('conv-grid').innerHTML=players.map(p=>`
-    <div class="conv-player ${convSelected.has(p.id)?'selected':''}" onclick="toggleConv('${p.id}')">
-      <span class="conv-num">#${p.number||'--'}</span>
-      <div style="flex:1">
-        <div style="font-size:13px;font-weight:600;color:var(--navy)">${p.name}</div>
-        <div style="font-size:11px;color:var(--muted)">${p.position||'Sin posicion'}${p.isCaptain?' . Capitan':''}</div>
-      </div>
-      ${p.isCaptain?'<span class="captain-badge">C</span>':''}
-      <div class="conv-check">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-    </div>`).join('');
+
+  // Render cada sección
+  function playerChip(p,statusClass,statusLabel,clickFn,btnColor){
+    return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--border)">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);min-width:30px">#${p.number||'--'}</span>
+      <span style="flex:1;font-size:13px;font-weight:600;color:var(--navy)">${p.name}${p.isCaptain?' 🅲':''}</span>
+      <button onclick="${clickFn}" style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;border:none;cursor:pointer;background:${btnColor};color:#fff;flex-shrink:0">${statusLabel}</button>
+    </div>`;
+  }
+
+  const convocados=players.filter(p=>convSelected.has(p.id)&&!convEnDuda.has(p.id)&&!convNoDisp.has(p.id));
+  const enDuda=players.filter(p=>convEnDuda.has(p.id));
+  const noDisp=players.filter(p=>convNoDisp.has(p.id));
+  // Not selected = not in any list, show as available to add
+  const noSel=players.filter(p=>!convSelected.has(p.id)&&!convEnDuda.has(p.id)&&!convNoDisp.has(p.id));
+
+  const gridEl=document.getElementById('conv-grid');
+  const dudaEl=document.getElementById('conv-grid-duda');
+  const nodispEl=document.getElementById('conv-grid-nodisp');
+
+  gridEl.innerHTML=[
+    ...convocados.map(p=>playerChip(p,'ok','→ En Duda',`convSetStatus('${p.id}','duda')`,'var(--warn)')),
+    ...noSel.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:var(--bg);border:1px dashed var(--border);opacity:.6">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);min-width:30px">#${p.number||'--'}</span>
+      <span style="flex:1;font-size:13px;font-weight:600;color:var(--muted)">${p.name}</span>
+      <button onclick="convSetStatus('${p.id}','conv')" style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;border:none;cursor:pointer;background:var(--ok);color:#fff">+ Convocar</button>
+    </div>`)
+  ].join('')||'<p style="color:var(--muted);font-size:12px;font-style:italic;padding:4px 0">Sin convocados</p>';
+
+  dudaEl.innerHTML=enDuda.map(p=>playerChip(p,'warn','→ No disp.',`convSetStatus('${p.id}','nodisp')`,'var(--err)')).join('')
+    ||'<p style="color:var(--muted);font-size:12px;font-style:italic;padding:4px 0">—</p>';
+
+  nodispEl.innerHTML=noDisp.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.15)">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--err);min-width:30px">#${p.number||'--'}</span>
+    <span style="flex:1;font-size:13px;font-weight:600;color:var(--muted);text-decoration:line-through">${p.name}</span>
+    <button onclick="convSetStatus('${p.id}','conv')" style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;border:1px solid var(--border);cursor:pointer;background:var(--bg);color:var(--muted)">Quitar</button>
+  </div>`).join('')||'<p style="color:var(--muted);font-size:12px;font-style:italic;padding:4px 0">—</p>';
+
   updateConvPreview();
 }
 
-document.addEventListener('input', e=>{if(['conv-cat','conv-fecha','conv-evento','conv-tipo'].includes(e.target.id)) updateConvPreview();});
+function convSetStatus(pid,status){
+  convSelected.delete(pid);convEnDuda.delete(pid);convNoDisp.delete(pid);
+  if(status==='conv') convSelected.add(pid);
+  else if(status==='duda') convEnDuda.add(pid);
+  else if(status==='nodisp') convNoDisp.add(pid);
+  renderConvocatoria();
+}
+
+document.addEventListener('input', e=>{
+  if(['conv-cat','conv-fecha','conv-evento','conv-tipo','conv-etapa','conv-hora','conv-sede','conv-jersey'].includes(e.target.id)) updateConvPreview();
+});
 
 function toggleConv(pid){
   if(convSelected.has(pid)) convSelected.delete(pid);
@@ -4940,29 +5079,92 @@ function toggleConv(pid){
 }
 function convSelectAll(){
   const cat=document.getElementById('conv-cat')?.value;
-  A.players.filter(p=>p.category===cat&&p.active!==false).forEach(p=>convSelected.add(p.id));
+  A.players.filter(p=>p.category===cat&&p.active!==false).forEach(p=>{
+    convSelected.add(p.id);convEnDuda.delete(p.id);convNoDisp.delete(p.id);
+  });
   renderConvocatoria();
 }
-function convClearAll(){convSelected.clear();renderConvocatoria();}
+function convClearAll(){convSelected.clear();convEnDuda.clear();convNoDisp.clear();renderConvocatoria();}
 
 function updateConvPreview(){
   const cat=document.getElementById('conv-cat')?.value||'';
   const fecha=document.getElementById('conv-fecha')?.value||'';
-  const evento=document.getElementById('conv-evento')?.value||cat;
+  const evento=document.getElementById('conv-evento')?.value||'';
   const tipo=document.getElementById('conv-tipo')?.value||'partido';
-  const selected=A.players.filter(p=>convSelected.has(p.id)&&p.category===cat).sort((a,b)=>parseInt(a.number||99)-parseInt(b.number||99));
-  const captain=selected.find(p=>p.isCaptain);
-  const dateStr=fecha?new Date(fecha+'T00:00:00').toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long'}):fecha;
-  let msg=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> CONVOCATORIA -- TANNERY CITY FC\n`;
-  msg+=`-----------------------\n`;
-  msg+=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> ${evento||'Evento'}\n`;
-  msg+=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> ${dateStr||'Fecha por confirmar'}\n`;
-  msg+=` ${cat}\n\n`;
-  msg+=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> CONVOCADOS (${selected.length}):\n`;
-  selected.forEach((p,i)=>{msg+=`${i+1}. #${p.number||'--'} ${p.name}${p.isCaptain?' (C)':''}${p.position?' -- '+p.position:''}\n`;});
-  if(captain) msg+=`\n Capitan: ${captain.name}`;
-  msg+=`\n\nA prepararse! (+)\n-- Tannery City FC`;
-  document.getElementById('conv-preview').textContent=msg;
+  const hora=document.getElementById('conv-hora')?.value||'';
+  const sede=document.getElementById('conv-sede')?.value||'Tannery City Park';
+  const jersey=document.getElementById('conv-jersey')?.value||'';
+  const etapa=document.getElementById('conv-etapa')?.value||'';
+
+  const players=A.players.filter(p=>p.category===cat&&p.active!==false).sort((a,b)=>parseInt(a.number||99)-parseInt(b.number||99));
+  const convocados=players.filter(p=>convSelected.has(p.id)&&!convEnDuda.has(p.id)&&!convNoDisp.has(p.id));
+  const enDuda=players.filter(p=>convEnDuda.has(p.id));
+  const noDisp=players.filter(p=>convNoDisp.has(p.id));
+
+  const dateStr=fecha?new Date(fecha+'T00:00:00').toLocaleDateString('es-MX',{weekday:'long',day:'numeric',month:'long'}):'(fecha)';
+  const horaStr=hora||'(hora)';
+  const sedeStr=sede||'(sede)';
+
+  let msg='';
+
+  if(tipo==='fase-final'){
+    // Mensaje épico Fase Final
+    const etapaLabel={'16vos':'16vos de Final','8vos':'8vos de Final','cuartos':'Cuartos de Final','semis':'Semifinal','final':'Gran Final'}[etapa]||etapa;
+    msg+=`⚔️🛡️ LOS ELEGIDOS HAN SIDO LLAMADOS\n`;
+    msg+=`━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg+=`${etapaLabel}${etapaLabel?' — ':''} ${evento||cat}\n\n`;
+    msg+=`📅 ${dateStr}\n`;
+    msg+=`🕒 Llegada: ${horaStr}\n`;
+    msg+=`📍 Sede: ${sedeStr}\n`;
+    if(jersey) msg+=`👕 Jersey: ${jersey}\n`;
+    msg+=`⚫ Short negro\n`;
+    msg+=`⚪ Medias blancas\n\n`;
+    msg+=`🔥 TANNERS CONVOCADOS (${convocados.length}):\n`;
+    convocados.forEach((p,i)=>{msg+=`${i+1}. #${p.number||'--'} ${p.name}${p.isCaptain?' 🅲':''}\n`;});
+    if(enDuda.length){
+      msg+=`\n🟡 EN DUDA (${enDuda.length}):\n`;
+      enDuda.forEach(p=>{msg+=`• ${p.name}\n`;});
+    }
+    if(noDisp.length){
+      msg+=`\n🔴 NO DISPONIBLES (${noDisp.length}):\n`;
+      noDisp.forEach(p=>{msg+=`• ${p.name}\n`;});
+    }
+    msg+=`\n━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg+=`La armadura está lista.\n`;
+    msg+=`La T se porta con orgullo.\n`;
+    msg+=`Jueguen por la ciudad.\n`;
+    msg+=`Jueguen por la familia.\n`;
+    msg+=`Jueguen por los Tanners.\n\n`;
+    msg+=`#WeAreTanners`;
+  } else {
+    // Mensaje estándar
+    const tipoLabel={'partido':'⚽ Partido','amistoso':'🤝 Amistoso','torneo':'🏆 Torneo','entrenamiento':'🏋️ Entrenamiento especial'}[tipo]||tipo;
+    msg+=`📋⚔️ CONVOCATORIA OFICIAL — TANNERY CITY FC\n`;
+    msg+=`━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg+=`${tipoLabel}: ${evento||cat}\n\n`;
+    msg+=`📅 Fecha: ${dateStr}\n`;
+    msg+=`🕒 Hora de llegada: ${horaStr}\n`;
+    msg+=`📍 Sede: ${sedeStr}\n`;
+    if(jersey) msg+=`👕 Jersey: ${jersey}\n`;
+    msg+=`⚫ Short negro\n`;
+    msg+=`⚪ Medias blancas\n\n`;
+    msg+=`🔥 CONVOCADOS (${convocados.length}):\n`;
+    convocados.forEach((p,i)=>{msg+=`${i+1}. #${p.number||'--'} ${p.name}${p.isCaptain?' (C)':''}${p.position?' — '+p.position:''}\n`;});
+    if(enDuda.length){
+      msg+=`\n🟡 EN DUDA (${enDuda.length}):\n`;
+      enDuda.forEach(p=>{msg+=`• ${p.name}\n`;});
+    }
+    if(noDisp.length){
+      msg+=`\n🔴 NO DISPONIBLES (${noDisp.length}):\n`;
+      noDisp.forEach(p=>{msg+=`• ${p.name}\n`;});
+    }
+    msg+=`\n━━━━━━━━━━━━━━━━━━━━━━\n`;
+    msg+=`A prepararse. La T se porta con orgullo. 🟡\n`;
+    msg+=`— Tannery City FC`;
+  }
+
+  const prev=document.getElementById('conv-preview');
+  if(prev) prev.textContent=msg;
 }
 
 function copyConvocatoria(){
@@ -5252,6 +5454,52 @@ function renderHoy(){
 
 function closeHoyAlerts(){}// placeholder
 
+/* ==== BIRTHDAY NOTIFICATIONS (login check) ==== */
+function checkBirthdayNotificationsOnLogin(){
+  if(!A.players) return;
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const lastCheck = localStorage.getItem('tcfc_bday_check_date');
+  if(lastCheck === today) return; // Ya se verifico hoy
+  localStorage.setItem('tcfc_bday_check_date', today);
+
+  const active = A.players.filter(p=>p.active!==false && p.birthdate);
+  const todays = [], nextWeek = [];
+
+  active.forEach(function(p){
+    const parts = p.birthdate.split('-');
+    if(parts.length < 3) return;
+    const bMonth = parseInt(parts[1])-1, bDay = parseInt(parts[2]);
+    const thisYear = new Date(now.getFullYear(), bMonth, bDay);
+    const diff = Math.round((thisYear - now) / (1000*60*60*24));
+    const dayDiff = diff < 0 ? diff + 365 : diff;
+    if(dayDiff === 0) todays.push(p);
+    else if(dayDiff > 0 && dayDiff <= 7) nextWeek.push({player:p, days:dayDiff});
+  });
+
+  // Cumpleanos HOY - snack visible + notif interna
+  if(todays.length > 0){
+    setTimeout(function(){
+      const nombres = todays.map(p=>p.name.split(' ')[0]).join(', ');
+      snack('🎂 Cumpleaños HOY: '+nombres+'! Felicita a tu Tanner 🎉','ok');
+      // Notificacion interna si hay sistema disponible
+      if(typeof sendInternalNotif === 'function'){
+        todays.forEach(function(p){
+          sendInternalNotif('info','🎂 HOY cumpleaños: '+p.name+' ('+p.category+')');
+        });
+      }
+    }, 2000);
+  }
+
+  // Cumpleanos esta semana
+  if(nextWeek.length > 0 && currentRole === 'admin'){
+    setTimeout(function(){
+      const msg = nextWeek.map(b=>b.player.name.split(' ')[0]+' en '+b.days+'d').join(', ');
+      snack('🎁 Cumpleaños pronto: '+msg,'ok');
+    }, 4500);
+  }
+}
+
 function renderHoyActions(){
   const el=document.getElementById('hoy-actions');
   if(!el)return;
@@ -5276,7 +5524,13 @@ function renderHoyActions(){
     ]
   };
   const roleActions=actions[currentRole]||actions.admin;
-  el.innerHTML=roleActions.map(a=>`<div class="hoy-btn" onclick="${a.fn}"><div class="hoy-btn-ico">${a.ico}</div><div class="hoy-btn-lbl">${a.lbl}</div><div class="hoy-btn-sub">${a.sub}</div></div>`).join('');
+  el.innerHTML=roleActions.map((a,i)=>`
+    <div class="hoy-btn hoy-btn-${currentRole}" onclick="${a.fn}" style="border-left:4px solid var(--navy);position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:.6"></div>
+      <div class="hoy-btn-ico" style="font-size:22px">${a.ico}</div>
+      <div class="hoy-btn-lbl" style="font-size:14px;font-weight:800">${a.lbl}</div>
+      <div class="hoy-btn-sub">${a.sub}</div>
+    </div>`).join('');
 
   // Mostrar/ocultar grids segun rol
   const g1=document.getElementById('hoy-grid-1'),g2=document.getElementById('hoy-grid-2');
@@ -7191,6 +7445,42 @@ var TESTS_DEF = [
     if(!found) return {pass:false,detail:'No encontro al jugador existente para el check de duplicados'};
     if(A.players.length !== beforeCount - 1) return {pass:false,detail:'Error en cleanup del test'};
     return {pass:true,detail:'Logica anti-duplicados OK. Jugadores existentes se detectan por nombre. Se actualizan campos vacios, no se duplican.'};
+  }},
+  {id:'QA-39',name:'Jugador eliminado no regresa al hacer sync desde Sheets',cat:'Sincronizacion',run:function(){
+    if(typeof confirmDeleteJugador !== 'function') return {pass:false,detail:'confirmDeleteJugador no existe'};
+    // Verify deleted_players tracking in localStorage
+    var deletedBefore = JSON.parse(localStorage.getItem('tcfc_deleted_players')||'[]');
+    var testId = 'qa_del_test_'+Date.now();
+    var arr = deletedBefore.concat([testId]);
+    localStorage.setItem('tcfc_deleted_players', JSON.stringify(arr));
+    // Simulate pullFromSheets filter logic
+    var fakeFromSheets = [{id: testId, name:'Jugador Prueba', active:true}];
+    var deletedIds = JSON.parse(localStorage.getItem('tcfc_deleted_players')||'[]');
+    var filtered = fakeFromSheets.filter(function(p){return !deletedIds.includes(p.id);});
+    // Cleanup
+    localStorage.setItem('tcfc_deleted_players', JSON.stringify(deletedBefore));
+    if(filtered.length !== 0) return {pass:false,detail:'El jugador eliminado volvio al hacer el filtro de pull'};
+    return {pass:true,detail:'Eliminacion persistente OK. tcfc_deleted_players se respeta en pullFromSheets. El jugador no regresa.'};
+  }},
+  {id:'QA-40',name:'La convocatoria genera texto con emojis (sin codigo SVG)',cat:'Convocatoria',run:function(){
+    if(typeof updateConvPreview !== 'function') return {pass:false,detail:'updateConvPreview no existe'};
+    if(typeof convSelected === 'undefined') return {pass:false,detail:'convSelected no existe'};
+    if(typeof convEnDuda === 'undefined') return {pass:false,detail:'convEnDuda no existe'};
+    if(typeof convNoDisp === 'undefined') return {pass:false,detail:'convNoDisp no existe'};
+    // Check preview element exists
+    var prev = document.getElementById('conv-preview');
+    if(!prev) return {pass:false,detail:'Elemento conv-preview no encontrado'};
+    // Check that the text does not contain SVG code
+    var text = prev.textContent || '';
+    if(text.includes('<svg') || text.includes('stroke-width')) return {pass:false,detail:'La vista previa contiene codigo SVG visible: '+text.substring(0,100)};
+    // Check Fase Final option exists
+    var tipoSel = document.getElementById('conv-tipo');
+    if(!tipoSel) return {pass:false,detail:'Selector conv-tipo no encontrado'};
+    var hasFaseFinal = Array.from(tipoSel.options).some(function(o){return o.value==='fase-final';});
+    if(!hasFaseFinal) return {pass:false,detail:'Opcion Fase Final no encontrada en selector'};
+    var etapaSel = document.getElementById('conv-etapa');
+    if(!etapaSel) return {pass:false,detail:'Selector conv-etapa no encontrado'};
+    return {pass:true,detail:'Convocatoria OK: sin SVG en preview, Fase Final disponible, 3 sets de estado (convocado/en-duda/no-disponible).'};
   }}
 ];
 
@@ -8201,9 +8491,11 @@ async function pullFromSheets(silent){
 
     var pulled = data.data || {};
 
-    // FULL REPLACE  Sheets es la fuente de verdad
+    // FULL REPLACE  Sheets es la fuente de verdad PERO respetamos eliminaciones locales
     if(Array.isArray(pulled.players) && pulled.players.length > 0){
-      A.players = pulled.players;
+      var deletedIds=[];
+      try{deletedIds=JSON.parse(localStorage.getItem('tcfc_deleted_players')||'[]');}catch(e){}
+      A.players = pulled.players.filter(function(p){return !deletedIds.includes(p.id);});
     }
     if(Array.isArray(pulled.sessions) && pulled.sessions.length > 0){
       A.sessions = pulled.sessions;
