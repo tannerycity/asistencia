@@ -2198,6 +2198,30 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
           Traer datos de la nube
         </button>
+        <button onclick="clearFailedSync()" id="msync-clear-btn" style="display:none;width:100%;padding:11px;border-radius:12px;background:rgba(239,68,68,.08);color:var(--err);font-size:13px;font-weight:600;border:1.5px solid rgba(239,68,68,.2);cursor:pointer;align-items:center;justify-content:center;gap:8px">
+          🗑️ Limpiar errores y reintentar
+        </button>
+        <!-- Reset sheet (para arreglar schemas viejos) -->
+        <details style="margin-top:4px">
+          <summary style="font-size:11px;color:var(--muted);cursor:pointer;padding:4px 0">🔧 Opciones avanzadas</summary>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:7px">
+            <div style="font-size:11px;color:var(--muted);padding:6px;background:var(--bg);border-radius:8px">
+              Si una hoja de Sheets tiene columnas viejas, reiníciala aquí. Los datos se pierden de Sheets pero siguen en el app.
+            </div>
+            <select id="reset-sheet-sel" class="fsel" style="font-size:12px">
+              <option value="">Selecciona hoja a reiniciar...</option>
+              <option value="TC_Prospectos">TC_Prospectos (Prospectos)</option>
+              <option value="TC_Pagos">TC_Pagos (Pagos)</option>
+              <option value="TC_Jugadores">TC_Jugadores (Jugadores)</option>
+              <option value="TC_Utileria">TC_Utileria (Utilería)</option>
+              <option value="TC_UtilReports">TC_UtilReports (Solicitudes)</option>
+              <option value="TC_UtilAsignaciones">TC_UtilAsignaciones (Asignaciones)</option>
+            </select>
+            <button onclick="resetRemoteSheet()" style="padding:8px;border-radius:8px;background:rgba(239,68,68,.08);color:var(--err);font-size:12px;font-weight:600;border:1.5px solid rgba(239,68,68,.2);cursor:pointer">
+              ⚠️ Reiniciar hoja seleccionada
+            </button>
+          </div>
+        </details>
       </div>
 
       <div id="msync-last" style="font-size:11px;color:var(--muted);text-align:center;margin-top:12px"></div>
@@ -3295,18 +3319,26 @@ function renderDash(){
     <div class="stat-card s-err"><div class="stat-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--err)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="stat-val">${upcoming.length}</div><div class="stat-lbl">Eventos Proximos</div><div class="stat-sub">${upcoming[0]?upcoming[0].title.substring(0,22)+'...':'Sin eventos'}</div></div>
   `;
 
-  // Alerts
+  // Alerts — solo admin y administrativo
   const pend=active.length-paid;
   const unassigned=A.players.filter(p=>p.active!==false&&(!p.category||p.category===''));
   const pending=getPendingProspects();
   let alerts='';
-  if(pending.length>0&&currentRole==='admin') alerts+=`<div class="alert" style="background:rgba(37,99,235,.07);border-color:rgba(37,99,235,.2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue-m)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg><span><strong>${pending.length} jugador${pending.length>1?'es':''} nuevo${pending.length>1?'s':''}</strong> por aprobar de sesiones recientes. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('jugadores')">Revisar -></button></span></div>`;
-  if(unassigned.length>0) alerts+=`<div class="alert warn">Sin categoria: <strong>${unassigned.length} jugador${unassigned.length>1?'es':''}</strong> pendiente${unassigned.length>1?'s':''} de asignar. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('jugadores')">Asignar -></button></div>`;
-  if(pend>3) alerts+=`<div class="alert warn"><strong>${pend} jugadores</strong> con pago pendiente este mes. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('pagos')">Ver -></button></div>`;
-  const sinDocs=active.filter(p=>getDocCompleteness(p).pct<100).length;
-  if(sinDocs>0) alerts+=`<div class="alert warn"><strong>${sinDocs} jugador${sinDocs>1?'es':''}</strong> con documentos incompletos. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('jugadores')">Ver -></button></div>`;
-  const lowAtt=getLowAtt();
-  if(lowAtt.length>0) alerts+=`<div class="alert"><strong>${lowAtt.length} jugadores</strong> con asistencia menor al 70% este mes.</div>`;
+  if(currentRole==='admin'||currentRole==='administrativo'){
+    if(pending.length>0&&currentRole==='admin') alerts+=`<div class="alert" style="background:rgba(37,99,235,.07);border-color:rgba(37,99,235,.2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue-m)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg><span><strong>${pending.length} jugador${pending.length>1?'es':''} nuevo${pending.length>1?'s':''}</strong> por aprobar de sesiones recientes. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('jugadores')">Revisar -></button></span></div>`;
+    if(unassigned.length>0) alerts+=`<div class="alert warn">Sin categoria: <strong>${unassigned.length} jugador${unassigned.length>1?'es':''}</strong> pendiente${unassigned.length>1?'s':''} de asignar. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('jugadores')">Asignar -></button></div>`;
+    if(pend>3) alerts+=`<div class="alert warn"><strong>${pend} jugadores</strong> con pago pendiente este mes. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('pagos')">Ver -></button></div>`;
+    const sinDocs=active.filter(p=>getDocCompleteness(p).pct<100).length;
+    if(sinDocs>0) alerts+=`<div class="alert warn"><strong>${sinDocs} jugador${sinDocs>1?'es':''}</strong> con documentos incompletos. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('jugadores')">Ver -></button></div>`;
+    const lowAtt=getLowAtt();
+    if(lowAtt.length>0) alerts+=`<div class="alert"><strong>${lowAtt.length} jugadores</strong> con asistencia menor al 70% este mes.</div>`;
+    // Alertas utilería
+    initUtilData();
+    const malosUtil=A.utileria.filter(u=>u.condition==='malo').length;
+    const pendSol=A.utilReports.filter(r=>!r.resolved).length;
+    if(malosUtil>0) alerts+=`<div class="alert warn">📦 <strong>${malosUtil} artículo${malosUtil>1?'s':''}</strong> de utilería por reponer. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('utileria')">Ver -></button></div>`;
+    else if(pendSol>0) alerts+=`<div class="alert" style="background:rgba(37,99,235,.07);border-color:rgba(37,99,235,.2)">📋 <strong>${pendSol} solicitud${pendSol>1?'es':''}</strong> de material pendiente${pendSol>1?'s':''}. <button class="btn-g" style="padding:3px 8px;font-size:12px;" onclick="nav('utileria');setTimeout(()=>switchUtilTab('solicitudes',null),150)">Revisar -></button></div>`;
+  }
   document.getElementById('d-alerts').innerHTML=alerts;
 
   // Chart
@@ -6272,6 +6304,21 @@ function showSyncPanel(){
   if(syncBtn) syncBtn.textContent=noUrl?'⚙️ Ir a Config':'🔄 Sincronizar ahora';
   if(syncBtn) syncBtn.onclick=noUrl?()=>{closeM('m-sync');setTimeout(()=>openM('m-cfg'),200);}:doManualSync;
 
+  // Botón limpiar y detalle de fallidos
+  const clearBtn=document.getElementById('msync-clear-btn');
+  const failDetail=document.getElementById('msync-fail-detail');
+  if(clearBtn) clearBtn.style.display=fail>0?'flex':'none';
+  if(failDetail){
+    if(fail>0){
+      failDetail.style.display='block';
+      const failedItems=q.filter(i=>i.status==='failed').slice(0,10);
+      failDetail.innerHTML=`<div style="font-weight:700;margin-bottom:6px">⚠️ ${fail} operaciones fallidas:</div>`+
+        failedItems.map(i=>`<div style="padding:3px 0;border-bottom:1px solid rgba(239,68,68,.1)">• ${i.action} · ${i.entity}${i.payload?.name?' · '+i.payload.name:''} · ${i.tries} intentos</div>`).join('');
+    } else {
+      failDetail.style.display='none';
+    }
+  }
+
   openM('m-sync');
 }
 
@@ -6285,7 +6332,6 @@ async function doManualSync(){
   finally{
     if(btn){btn.textContent='🔄 Sincronizar ahora';btn.disabled=false;}
     updateSyncBadge();
-    // Re-render panel
     const q=loadQueue();
     const pend=q.filter(i=>i.status==='pending').length;
     const ttl=document.getElementById('msync-ttl');
@@ -6295,16 +6341,39 @@ async function doManualSync(){
 
 async function doPullSync(){
   const btn=document.getElementById('msync-pull-btn');
-  if(btn){btn.innerHTML='<span style="animation:sp-pulse 1s infinite;display:inline-block">⬇️</span> Jalando datos...';btn.disabled=true;}
+  if(btn){btn.innerHTML='⬇️ Jalando...';btn.disabled=true;}
   try{
     await pullFromSheets(false);
     localStorage.setItem('tcfc_last_pull_ts', Date.now().toString());
     snack('✅ Datos actualizados desde Sheets','ok');
     closeM('m-sync');
-  }catch(e){snack('Error al traer datos','err');}
+  }catch(e){snack('Error al traer datos: '+e.message,'err');}
   finally{
     if(btn){btn.innerHTML='⬇️ Traer datos de la nube';btn.disabled=false;}
   }
+}
+
+async function resetRemoteSheet(){
+  const sel=document.getElementById('reset-sheet-sel')?.value;
+  if(!sel){snack('Selecciona una hoja primero');return;}
+  if(!A.config?.scriptUrl){snack('Sin URL de Apps Script configurada');return;}
+  if(!confirm(`¿Reiniciar la hoja "${sel}"? Los datos en Sheets se borrarán pero el app los volverá a subir.`))return;
+  try{
+    snack('Reiniciando hoja...');
+    const res=await fetch(A.config.scriptUrl,{method:'POST',body:JSON.stringify({action:'RESET_SHEET',clubToken:A.config.clubToken||'1850TC1850',sheetName:sel})});
+    const data=await res.json();
+    if(data.ok){
+      snack(`✅ Hoja ${sel} reiniciada — ahora sincroniza para subir los datos`,'ok');
+      // Re-encolar todos los datos relevantes
+      if(sel==='TC_Prospectos') (A.prospects||[]).forEach(p=>enqueueSync('UPSERT_PROSPECT','prospects',p.id,p));
+      if(sel==='TC_Pagos') A.payments.forEach(p=>enqueueSync('UPSERT_PAYMENT','payments',p.id,p));
+      if(sel==='TC_Jugadores') A.players.forEach(p=>enqueueSync('UPSERT_PLAYER','players',p.id,p));
+      if(sel==='TC_Utileria') A.utileria.forEach(u=>enqueueSync('UPSERT_UTILERIA','utileria',u.id,u));
+      setTimeout(()=>showSyncPanel(),400);
+    } else {
+      snack('Error: '+(data.msg||'respuesta inesperada'));
+    }
+  }catch(e){snack('Error de red: '+e.message);}
 }
 
 /* ====== SECURITY CONFIG ====== */
@@ -9828,10 +9897,16 @@ function initHumanSync(){
 
 function clearFailedSync(){
   var q = JSON.parse(localStorage.getItem('tcfc_sync_queue')||'[]');
-  var clean = q.filter(function(i){ return (i.tries||0) < 3; });
-  if(clean.length !== q.length){
-    localStorage.setItem('tcfc_sync_queue', JSON.stringify(clean));
-  }
+  // Resetear tries de fallidos para que reintenten
+  var reset = q.map(function(i){
+    if(i.status==='failed'){ i.status='pending'; i.tries=0; }
+    return i;
+  });
+  localStorage.setItem('tcfc_sync_queue', JSON.stringify(reset));
+  updateSyncBadge();
+  snack('Cola reiniciada — reintentando...');
+  showSyncPanel(); // refrescar panel
+  setTimeout(processSyncQueue, 500); // intentar de inmediato
 }
 
 init();
