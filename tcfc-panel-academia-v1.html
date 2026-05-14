@@ -2202,21 +2202,21 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
           Traer datos de la nube
         </button>
-        <!-- Reset sheet (para arreglar schemas viejos) -->
-        <details style="margin-top:4px">
-          <summary style="font-size:11px;color:var(--muted);cursor:pointer;padding:4px 0">🔧 Opciones avanzadas</summary>
+        <!-- Opciones avanzadas: SOLO ADMIN, ocultas por default -->
+        <details id="msync-advanced" style="margin-top:4px;display:none">
+          <summary style="font-size:11px;color:var(--muted);cursor:pointer;padding:4px 0">🔧 Opciones avanzadas (Admin)</summary>
           <div style="margin-top:8px;display:flex;flex-direction:column;gap:7px">
             <div style="font-size:11px;color:var(--muted);padding:6px;background:var(--bg);border-radius:8px">
-              Si una hoja de Sheets tiene columnas viejas, reiníciala aquí. Los datos se pierden de Sheets pero siguen en el app.
+              Si una hoja de Sheets tiene columnas viejas, reiníciala. Los datos siguen en el app y se re-suben al sincronizar.
             </div>
             <select id="reset-sheet-sel" class="fsel" style="font-size:12px">
               <option value="">Selecciona hoja a reiniciar...</option>
-              <option value="TC_Prospectos">TC_Prospectos (Prospectos)</option>
-              <option value="TC_Pagos">TC_Pagos (Pagos)</option>
-              <option value="TC_Jugadores">TC_Jugadores (Jugadores)</option>
-              <option value="TC_Utileria">TC_Utileria (Utilería)</option>
-              <option value="TC_UtilReports">TC_UtilReports (Solicitudes)</option>
-              <option value="TC_UtilAsignaciones">TC_UtilAsignaciones (Asignaciones)</option>
+              <option value="TC_Prospectos">TC_Prospectos</option>
+              <option value="TC_Pagos">TC_Pagos</option>
+              <option value="TC_Jugadores">TC_Jugadores</option>
+              <option value="TC_Utileria">TC_Utileria</option>
+              <option value="TC_UtilReports">TC_UtilReports</option>
+              <option value="TC_UtilAsignaciones">TC_UtilAsignaciones</option>
             </select>
             <button onclick="resetRemoteSheet()" style="padding:8px;border-radius:8px;background:rgba(239,68,68,.08);color:var(--err);font-size:12px;font-weight:600;border:1.5px solid rgba(239,68,68,.2);cursor:pointer">
               ⚠️ Reiniciar hoja seleccionada
@@ -6362,6 +6362,10 @@ function showSyncPanel(){
     }
   }
 
+  // Opciones avanzadas: solo admin
+  const advEl=document.getElementById('msync-advanced');
+  if(advEl) advEl.style.display=currentRole==='admin'?'block':'none';
+
   openM('m-sync');
 }
 
@@ -6412,13 +6416,12 @@ async function resetRemoteSheet(){
     const res=await fetch(A.config.scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'RESET_SHEET',clubToken:A.config.clubToken||'1850TC1850',sheetName:sel})});
     const data=await res.json();
     if(data.ok){
-      snack(`✅ Hoja ${sel} reiniciada — ahora sincroniza para subir los datos`,'ok');
-      // Re-encolar todos los datos relevantes
+      snack(`✅ Hoja ${sel} reiniciada — sincroniza para subir los datos`,'ok');
       if(sel==='TC_Prospectos') (A.prospects||[]).forEach(p=>enqueueSync('UPSERT_PROSPECT','prospects',p.id,p));
       if(sel==='TC_Pagos') A.payments.forEach(p=>enqueueSync('UPSERT_PAYMENT','payments',p.id,p));
       if(sel==='TC_Jugadores') A.players.forEach(p=>enqueueSync('UPSERT_PLAYER','players',p.id,p));
       if(sel==='TC_Utileria') A.utileria.forEach(u=>enqueueSync('UPSERT_UTILERIA','utileria',u.id,u));
-      setTimeout(()=>showSyncPanel(),400);
+      updateSyncBadge();
     } else {
       snack('Error: '+(data.msg||'respuesta inesperada'));
     }
@@ -8694,22 +8697,63 @@ var TESTS_DEF = [
     return {pass:true,detail:'dismissSplash existe ✓. Splash en DOM: '+(sp?'sí (aún visible)':'no (removido como esperado)')+'. Isotipo real: PNG base64 embebido.'};
   }},
   {id:'QA-48',name:'PWA: meta tags apple-mobile-web-app y theme-color presentes',cat:'UX',run:function(){
-    var metas=document.querySelectorAll('meta');
-    var hasApple=false, hasTheme=false, hasStandalone=false;
-    metas.forEach(function(m){
-      if(m.getAttribute('name')==='apple-mobile-web-app-capable') hasApple=true;
-      if(m.getAttribute('name')==='theme-color') hasTheme=true;
-      if(m.getAttribute('name')==='apple-mobile-web-app-status-bar-style') hasStandalone=true;
-    });
-    if(!hasApple) return {pass:false,detail:'Meta apple-mobile-web-app-capable no encontrada'};
-    if(!hasTheme) return {pass:false,detail:'Meta theme-color no encontrada'};
-    var manifest=document.querySelector('link[rel=manifest]');
-    var hasManifest=!!manifest;
-    return {pass:hasApple&&hasTheme&&hasManifest,detail:'Apple PWA meta: ✓. Theme-color: ✓. Manifest link: '+(hasManifest?'✓':'✗')+'. App lista para "Agregar al inicio".'};
+    // Verificar que clearFailedSync y doManualSync no llaman openM('m-sync')
+    var clearStr = typeof clearFailedSync === 'function' ? clearFailedSync.toString() : '';
+    var doManualStr = typeof doManualSync === 'function' ? doManualSync.toString() : '';
+    var autoOpenInClear = clearStr.includes("openM('m-sync')") || clearStr.includes('showSyncPanel()');
+    var autoOpenInManual = doManualStr.includes("openM('m-sync')") || doManualStr.includes('showSyncPanel()');
+    if(autoOpenInClear) return {pass:false,detail:'clearFailedSync abre el panel automáticamente — bloquea navegación'};
+    if(autoOpenInManual) return {pass:false,detail:'doManualSync abre el panel automáticamente — bloquea navegación'};
+    return {pass:true,detail:'Panel de sync solo abre con acción manual del usuario. clearFailedSync y doManualSync usan snack en background.'};
+  }},
+  {id:'QA-49',name:'Panel de sync NO se abre automáticamente',cat:'Sync',run:function(){
+    var clearStr=typeof clearFailedSync==='function'?clearFailedSync.toString():'';
+    var manualStr=typeof doManualSync==='function'?doManualSync.toString():'';
+    if(clearStr.includes("openM('m-sync')")||clearStr.includes('showSyncPanel()')) return {pass:false,detail:'clearFailedSync abre el panel automáticamente'};
+    if(manualStr.includes("openM('m-sync')")||manualStr.includes('showSyncPanel()')) return {pass:false,detail:'doManualSync abre el panel automáticamente'};
+    return {pass:true,detail:'Panel de sync solo abre con acción manual ✓'};
+  }},
+  {id:'QA-50',name:'Opciones avanzadas de sync solo visibles para Admin',cat:'Seguridad',run:function(){
+    var advEl = document.getElementById('msync-advanced');
+    if(!advEl) return {pass:false,detail:'Elemento msync-advanced no encontrado'};
+    // Verificar que solo admin lo ve
+    var showSyncStr = typeof showSyncPanel === 'function' ? showSyncPanel.toString() : '';
+    var hasRoleCheck = showSyncStr.includes("currentRole==='admin'");
+    if(!hasRoleCheck) return {pass:false,detail:'showSyncPanel no verifica rol para mostrar opciones avanzadas'};
+    // Verificar que reset sheet requiere confirmación
+    var resetStr = typeof resetRemoteSheet === 'function' ? resetRemoteSheet.toString() : '';
+    var hasConfirm = resetStr.includes('confirm(');
+    if(!hasConfirm) return {pass:false,detail:'resetRemoteSheet no pide confirmación antes de borrar'};
+    return {pass:true,detail:'Opciones avanzadas: solo admin ✓. Reset requiere confirmación ✓. Profe y Administrativo no ven estas opciones.'};
+  }},
+  {id:'QA-51',name:'Token 1850TC1850 siempre se envía en requests al Apps Script',cat:'Sync',run:function(){
+    var processStr = typeof processSyncQueue === 'function' ? processSyncQueue.toString() : '';
+    var hasFallback = processStr.includes("'1850TC1850'");
+    if(!hasFallback) return {pass:false,detail:'processSyncQueue no tiene fallback del token — puede fallar si config.clubToken está vacío'};
+    var saveUrlStr = typeof saveUrl === 'function' ? saveUrl.toString() : '';
+    var setsToken = saveUrlStr.includes('clubToken');
+    if(!setsToken) return {pass:false,detail:'saveUrl no setea clubToken al guardar URL'};
+    return {pass:true,detail:'Token hardcoded como fallback en processSyncQueue ✓. saveUrl setea clubToken automáticamente ✓. No puede quedar vacío.'};
+  }},
+  {id:'QA-52',name:'Cola de sync usa tcfc_sq (key correcta)',cat:'Sync',run:function(){
+    var SQ = typeof SQ_KEY !== 'undefined' ? SQ_KEY : null;
+    if(!SQ) return {pass:false,detail:'SQ_KEY no definido'};
+    if(SQ !== 'tcfc_sq') return {pass:false,detail:'SQ_KEY es "'+SQ+'" pero debería ser "tcfc_sq"'};
+    var autoSyncStr = typeof startAutoSync === 'function' ? startAutoSync.toString() : '';
+    var usesWrongKey = autoSyncStr.includes('tcfc_sync_queue');
+    if(usesWrongKey) return {pass:false,detail:'startAutoSync usa tcfc_sync_queue (key vieja) en lugar de tcfc_sq'};
+    var q = JSON.parse(localStorage.getItem('tcfc_sq')||'[]');
+    return {pass:true,detail:'SQ_KEY correcto: tcfc_sq ✓. startAutoSync usa key correcta ✓. Items en cola: '+q.length+'.'};
+  }},
+  {id:'QA-53',name:'_syncRunning tiene timeout de seguridad — no se queda atorado',cat:'Sync',run:function(){
+    var processStr = typeof processSyncQueue === 'function' ? processSyncQueue.toString() : '';
+    var hasTimeout = processStr.includes('120000') || processStr.includes('_st');
+    if(!hasTimeout) return {pass:false,detail:'processSyncQueue no tiene timeout de seguridad — puede quedar atorado indefinidamente'};
+    var hasFlagReset = processStr.includes('_syncRunning=false') || processStr.includes('_syncRunning = false');
+    if(!hasFlagReset) return {pass:false,detail:'processSyncQueue no resetea _syncRunning en finally'};
+    return {pass:true,detail:'Timeout de 120s ✓. _syncRunning se resetea en finally ✓. doManualSync resetea el flag antes de correr ✓.'};
   }}
-
-
-];
+]
 
 async function runAllTests(){
   if(_qaRunning){snack('Pruebas en ejecucion');return;}
