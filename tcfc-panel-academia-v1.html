@@ -1014,6 +1014,7 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
       <div class="role-btn selected" id="rb-admin" onclick="selectRole('admin')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Admin</div>
       <div class="role-btn" id="rb-profe" onclick="selectRole('profe')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></span>Profe</div>
       <div class="role-btn" id="rb-admin-rol" onclick="selectRole('administrativo')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span>Administrativo</div>
+      <div class="role-btn" id="rb-marketing" onclick="selectRole('marketing')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Marketing</div>
     </div>
     <div class="pin-row" id="pin-dots">
       <div class="pin-dot" id="pd0"></div>
@@ -1904,7 +1905,7 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 
       <div class="fgrp" style="margin-bottom:20px;">
         <label class="flbl" style="margin-bottom:10px;display:block">PINs de Acceso</label>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div class="fgrp">
             <label class="flbl" style="color:var(--gold)">Admin</label>
             <input type="password" class="fin" id="cfg-pin-admin" maxlength="4" placeholder="****" style="text-align:center;letter-spacing:6px;font-size:18px"/>
@@ -1916,6 +1917,10 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
           <div class="fgrp">
             <label class="flbl" style="color:var(--ok)">Administrativo</label>
             <input type="password" class="fin" id="cfg-pin-admin-rol" maxlength="4" placeholder="****" style="text-align:center;letter-spacing:6px;font-size:18px"/>
+          </div>
+          <div class="fgrp">
+            <label class="flbl" style="color:#EC4899">Marketing</label>
+            <input type="password" class="fin" id="cfg-pin-marketing" maxlength="4" placeholder="****" style="text-align:center;letter-spacing:6px;font-size:18px"/>
           </div>
         </div>
         <div style="margin-top:8px;display:flex;justify-content:flex-end;">
@@ -2165,6 +2170,51 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
     <div class="mft">
       <button class="btn-g" id="msd-del" onclick="deleteSess()" style="color:var(--err);margin-right:auto">Eliminar sesion</button>
       <button class="btn-p" onclick="closeM('m-sess-detail')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- WIZARD DE PRIMER ARRANQUE -->
+<div class="mover" id="m-setup-wizard" style="align-items:flex-end;padding:0;display:none">
+  <div class="modal" style="border-radius:20px 20px 0 0;max-width:480px;width:100%;margin:0 auto;padding-bottom:env(safe-area-inset-bottom)">
+    <div style="width:36px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 4px"></div>
+    <div class="mbd" style="padding:24px 22px 28px">
+      <!-- Header -->
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="font-size:40px;margin-bottom:10px">☁️</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--navy)">Conectar con Google Sheets</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5">Pega la URL de tu Apps Script para que los datos se sincronicen entre todos los dispositivos.</div>
+      </div>
+
+      <!-- Input URL -->
+      <div style="margin-bottom:14px">
+        <label style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px">URL del Apps Script</label>
+        <input type="url" id="wizard-url" class="fin" placeholder="https://script.google.com/macros/s/..." style="font-size:13px;width:100%"/>
+      </div>
+
+      <!-- Estado de conexión -->
+      <div id="wizard-status" style="display:none;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:14px;text-align:center"></div>
+
+      <!-- Botón principal -->
+      <button id="wizard-btn" onclick="doWizardConnect()" style="width:100%;padding:14px;border-radius:14px;background:var(--navy);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Conectar y sincronizar
+      </button>
+
+      <button onclick="closeM('m-setup-wizard')" style="width:100%;padding:10px;border-radius:10px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:8px">
+        Omitir por ahora
+      </button>
+
+      <!-- Instrucciones colapsables -->
+      <details style="margin-top:16px">
+        <summary style="font-size:12px;color:var(--blue-m);cursor:pointer;font-weight:600">¿Dónde encuentro la URL?</summary>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6;padding:10px;background:var(--bg);border-radius:8px">
+          1. Abre tu proyecto en <strong>script.google.com</strong><br>
+          2. Clic en <strong>Implementar → Administrar implementaciones</strong><br>
+          3. Copia la <strong>URL de la app web</strong><br>
+          4. Asegúrate que el acceso sea <strong>"Cualquier persona"</strong>
+        </div>
+      </details>
     </div>
   </div>
 </div>
@@ -2861,13 +2911,17 @@ const ROLES={
     canEdit:false,canConfig:false},
   administrativo:{label:'Administrativo',badge:'rb-admin-rol',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>',
     nav:['dashboard','jugadores','pagos','calendario','utileria'],
-    canEdit:false,canConfig:false}
+    canEdit:false,canConfig:false},
+  marketing:{label:'Marketing',badge:'rb-marketing',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    nav:['dashboard','calendario'],
+    canEdit:false,canConfig:false,canAddEvents:true}
 };
-const DEFAULT_PINS={admin:'1234',profe:'5678',administrativo:'9012'};
+const DEFAULT_PINS={admin:'1234',profe:'5678',administrativo:'9012',marketing:'3456'};
 const getPins=()=>({
   admin:A.config.pins?.admin||DEFAULT_PINS.admin,
   profe:A.config.pins?.profe||DEFAULT_PINS.profe,
-  administrativo:A.config.pins?.administrativo||DEFAULT_PINS.administrativo
+  administrativo:A.config.pins?.administrativo||DEFAULT_PINS.administrativo,
+  marketing:A.config.pins?.marketing||DEFAULT_PINS.marketing
 });
 
 /* ============== STATE ============== */
@@ -2898,7 +2952,65 @@ function migrateData(){
 }
 
 /* ============== INIT ============== */
-/* ====== SPLASH DISMISS ====== */
+/* ====== SETUP WIZARD ====== */
+function showSetupWizard(){
+  const el = document.getElementById('m-setup-wizard');
+  if(!el) return;
+  el.style.display = 'flex';
+  const inp = document.getElementById('wizard-url');
+  if(inp) inp.value = A.config.scriptUrl || '';
+}
+
+async function doWizardConnect(){
+  const url = document.getElementById('wizard-url')?.value?.trim();
+  if(!url || !url.startsWith('https://script.google.com')){
+    showWizardStatus('❌ URL inválida — debe empezar con https://script.google.com', 'err');
+    return;
+  }
+  const btn = document.getElementById('wizard-btn');
+  if(btn){ btn.textContent = 'Conectando...'; btn.disabled = true; }
+  showWizardStatus('🔄 Verificando conexión...', 'info');
+
+  try{
+    // Test ping
+    const res = await fetch(url + '?action=PING', {signal: AbortSignal.timeout(10000)});
+    const data = await res.json();
+    if(!data.ok && !data.msg){ throw new Error('Respuesta inesperada'); }
+
+    // Guardar URL y token
+    A.config.scriptUrl = url;
+    if(!A.config.clubToken) A.config.clubToken = '1850TC1850';
+    saveData();
+    updateSheetsDot();
+    updateSyncBadge();
+
+    showWizardStatus('✅ Conexión exitosa — jalando datos...', 'ok');
+    if(btn){ btn.textContent = '⬇️ Jalando datos...'; }
+
+    // Pull automático
+    await pullFromSheets(false);
+    localStorage.setItem('tcfc_last_pull_ts', Date.now().toString());
+
+    showWizardStatus('🎉 ¡Todo listo! Datos sincronizados.', 'ok');
+    setTimeout(()=>{ closeM('m-setup-wizard'); }, 1500);
+
+  }catch(e){
+    showWizardStatus('❌ Error: ' + (e.message||'No se pudo conectar') + '. Verifica la URL y el acceso en Apps Script.', 'err');
+  }finally{
+    if(btn){ btn.textContent = 'Conectar y sincronizar'; btn.disabled = false; }
+  }
+}
+
+function showWizardStatus(msg, type){
+  const el = document.getElementById('wizard-status');
+  if(!el) return;
+  el.style.display = 'block';
+  const colors = {ok:'rgba(16,185,129,.1)', err:'rgba(239,68,68,.1)', info:'rgba(37,99,235,.08)'};
+  const textColors = {ok:'var(--ok)', err:'var(--err)', info:'var(--blue-m)'};
+  el.style.background = colors[type] || colors.info;
+  el.style.color = textColors[type] || textColors.info;
+  el.textContent = msg;
+}
 function dismissSplash(){
   var sp = document.getElementById('tc-splash');
   if(!sp) return;
@@ -2975,6 +3087,23 @@ function enterApp(role){
   document.getElementById('notif-bell').style.display='flex';
   loadNotifications();
   startAutoSync(); initHumanSync();
+
+  // AUTO-PULL al entrar: jalar datos frescos de Sheets en background
+  if(A.config.scriptUrl){
+    var lastPull = parseInt(localStorage.getItem('tcfc_last_pull_ts')||'0');
+    var minsSinceLastPull = (Date.now() - lastPull) / 60000;
+    // Pull si no se ha jalado en los últimos 5 minutos
+    if(minsSinceLastPull > 5){
+      setTimeout(function(){
+        pullFromSheets(true); // silent = no notificación
+      }, 3000); // esperar 3s para que cargue la UI primero
+    }
+  }
+
+  // PRIMER ARRANQUE: si no hay URL, mostrar wizard de setup
+  if(!A.config.scriptUrl && currentRole === 'admin'){
+    setTimeout(showSetupWizard, 1000);
+  }
   // Hide nav items not in role
   const roleNav = ROLES[currentRole]?.nav || [];
   document.querySelectorAll('.mnit[id^="mob-"]').forEach(el => {
@@ -3130,11 +3259,13 @@ function savePins(){
   const a=document.getElementById('cfg-pin-admin').value.trim();
   const p=document.getElementById('cfg-pin-profe').value.trim();
   const ar=document.getElementById('cfg-pin-admin-rol').value.trim();
+  const mk=document.getElementById('cfg-pin-marketing')?.value.trim()||'';
   if(!A.config.pins) A.config.pins={...DEFAULT_PINS};
   let ok=true;
   if(a){if(/^\d{4}$/.test(a))A.config.pins.admin=a;else{snack('[!] Admin PIN debe ser 4 digitos');ok=false;}}
   if(p&&ok){if(/^\d{4}$/.test(p))A.config.pins.profe=p;else{snack('[!] Profe PIN debe ser 4 digitos');ok=false;}}
   if(ar&&ok){if(/^\d{4}$/.test(ar))A.config.pins.administrativo=ar;else{snack('[!] Administrativo PIN debe ser 4 digitos');ok=false;}}
+  if(mk&&ok){if(/^\d{4}$/.test(mk))A.config.pins.marketing=mk;else{snack('[!] Marketing PIN debe ser 4 digitos');ok=false;}}
   if(!ok)return;
   ['cfg-pin-admin','cfg-pin-profe','cfg-pin-admin-rol'].forEach(id=>document.getElementById(id).value='');
   saveData();
@@ -3906,6 +4037,19 @@ function renderSessions(){
 
 let viewingSessId=null;
 /* ====== safeDate: parsea fechas sin explotar ====== */
+// Formatea cualquier string de fecha a "13 may 2026"
+function fmtDate(str){
+  if(!str) return '--';
+  var d = safeDate(String(str));
+  if(!d) {
+    // Último intento para fechas tipo "Wed May 13 2026 00:00:00 GMT-0600..."
+    var attempt = new Date(str);
+    if(!isNaN(attempt.getTime())) d = attempt;
+    else return str; // devolver como está si no se puede parsear
+  }
+  return d.toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});
+}
+
 function safeDate(str){
   if(!str||typeof str!=='string') return null;
   // Normaliza: acepta YYYY-MM-DD, DD/MM/YYYY, DD-MM-YYYY, timestamps ISO
@@ -4607,7 +4751,7 @@ function renderCal(){
 function calNav(d){calDt.setMonth(calDt.getMonth()+d);renderCal();}
 
 function openAddEv(){
-  if(currentRole!=='admin'){snack('[!] Solo Admin puede agregar eventos');return;}
+  if(currentRole!=='admin'&&currentRole!=='marketing'){snack('[!] Solo Admin o Marketing puede agregar eventos');return;}
   ['ef-tit','ef-hora','ef-lugar','ef-notas'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('ef-fecha').value=new Date().toISOString().split('T')[0];
   document.getElementById('ef-cat').value='all';document.getElementById('ef-tipo').value='partido';
@@ -5154,7 +5298,7 @@ function saveUrl(){
     // Asegurar que el token esté siempre configurado
     if(!A.config.clubToken) A.config.clubToken='1850TC1850';
     saveData();updateSheetsDot();updateSyncBadge();
-    snack('URL guardada ✅ Token: '+A.config.clubToken,'ok');
+    snack('URL guardada ✅','ok');
   }else{snack('[!] Ingresa una URL valida');}
 }
 function updateSheetsDot(){
@@ -6558,51 +6702,171 @@ function checkBirthdayNotificationsOnLogin(){
 
 function renderHoyActions(){
   const el=document.getElementById('hoy-actions');
-  if(!el)return;
-  const actions={
-    admin:[
-      {ico:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>',lbl:'Dashboard completo',sub:'Stats del mes',fn:"document.getElementById('hoy-grid-1').style.display='';document.getElementById('hoy-grid-2').style.display=''"},
-      {ico:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',lbl:'Jugadores',sub:'Gestion del plantel',fn:"nav('jugadores')"},
-      {ico:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',lbl:'Pagos',sub:'Mensualidades',fn:"nav('pagos')"},
-      {ico:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',lbl:'Prospectos',sub:'Clases muestra',fn:"nav('jugadores');setTimeout(()=>switchJugView('prospectos',document.getElementById('jview-prospectos')),200)"},
-    ],
-    profe:[
-      {ico:'✅',lbl:'Registrar asistencia',sub:'Abrir lista de hoy',fn:"nav('asistencia')"},
-      {ico:'📋',lbl:'Crear convocatoria',sub:'Llamados y alineaciones',fn:"nav('convocatoria')"},
-      {ico:'📅',lbl:'Ver calendario',sub:'Eventos próximos',fn:"nav('calendario')"},
-      {ico:'📦',lbl:'Mi material',sub:'Ver lo que tengo',fn:"nav('utileria');setTimeout(()=>switchUtilTab('asignaciones',null),150)"},
-    ],
-    administrativo:[
-      {ico:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',lbl:'Registrar pago',sub:'Mensualidades',fn:"nav('pagos')"},
-      {ico:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',lbl:'Buscar jugador',sub:'Consultar ficha',fn:"nav('jugadores')"},
-      {ico:'',lbl:'Reporte de pagos',sub:'Descargar Excel',fn:"downloadPaymentsReportExcel()"},
-      {ico:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',lbl:'Ver historial',sub:'Actividad reciente',fn:"nav('pagos');setTimeout(()=>switchPayTab('historial'),200)"},
-    ]
-  };
-  const roleActions=actions[currentRole]||actions.admin;
-  el.innerHTML=roleActions.map((a,i)=>`
-    <div class="hoy-btn hoy-btn-${currentRole}" onclick="${a.fn}" style="border-left:4px solid var(--navy);position:relative;overflow:hidden">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);opacity:.6"></div>
-      <div class="hoy-btn-ico" style="font-size:22px">${a.ico}</div>
-      <div class="hoy-btn-lbl" style="font-size:14px;font-weight:800">${a.lbl}</div>
-      <div class="hoy-btn-sub">${a.sub}</div>
-    </div>`).join('');
+  if(!el) return;
+  const now=new Date();
+  const m=now.getMonth(),y=now.getFullYear();
+  const active=A.players.filter(p=>p.active!==false);
+  const mPays=A.payments.filter(p=>p.month===m&&p.year===y&&p.status==='paid');
+  const cobradoHoy=A.payments.filter(p=>p.status==='paid'&&p.paidDate===now.toISOString().split('T')[0]).reduce((s,p)=>s+(p.amount||0),0);
+  const pend=active.length-mPays.length;
+  const todaySess=A.sessions.filter(s=>s.date===now.toISOString().split('T')[0]);
+  const bdaysHoy=getBirthdaysIn(0,now);
 
-  // Mostrar/ocultar grids segun rol + tarjeta Mi Material para profe
-  const g1=document.getElementById('hoy-grid-1'),g2=document.getElementById('hoy-grid-2');
-  const ds=document.getElementById('d-stats');
+  /* ====== ADMIN ====== */
+  if(currentRole==='admin'){
+    el.innerHTML=`
+      <!-- Acción primaria: cobro rápido -->
+      <button onclick="openPagoModalConSelector()" style="width:100%;padding:16px;border-radius:16px;background:var(--ok);color:#fff;font-size:16px;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;box-shadow:0 4px 16px rgba(16,185,129,.3)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Registrar cobro
+        ${cobradoHoy>0?`<span style="font-size:12px;opacity:.8;font-weight:600">· $${cobradoHoy.toLocaleString()} hoy</span>`:''}
+      </button>
+      <!-- Grid de acciones secundarias -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <button onclick="nav('asistencia')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid ${todaySess.length>0?'var(--ok)':'var(--border)'};cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">${todaySess.length>0?'✅':'📋'}</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Asistencia</div>
+          <div style="font-size:10px;color:var(--muted)">${todaySess.length>0?todaySess.length+' sesión'+(todaySess.length>1?'es':'')+' hoy':'Sin registrar hoy'}</div>
+        </button>
+        <button onclick="nav('jugadores')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">👥</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Jugadores</div>
+          <div style="font-size:10px;color:var(--muted)">${active.length} activos</div>
+        </button>
+        <button onclick="nav('pagos')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid ${pend>0?'rgba(245,158,11,.4)':'var(--border)'};cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">${pend>0?'⚠️':'✅'}</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Pagos</div>
+          <div style="font-size:10px;color:${pend>0?'var(--warn)':'var(--muted)'}">${pend>0?pend+' pendientes':'Al corriente'}</div>
+        </button>
+        <button onclick="nav('convocatoria')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">📣</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Convocatoria</div>
+          <div style="font-size:10px;color:var(--muted)">Llamado y alineación</div>
+        </button>
+        <button onclick="nav('calendario')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">📅</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Agenda</div>
+          <div style="font-size:10px;color:var(--muted)">Eventos del club</div>
+        </button>
+        <button onclick="nav('utileria')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">📦</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Utilería</div>
+          <div style="font-size:10px;color:var(--muted)">Inventario del club</div>
+        </button>
+      </div>
+      <!-- Acciones rápidas de creación -->
+      <div style="display:flex;gap:7px">
+        <button onclick="openAddJugador()" class="btn-s btn-sm" style="flex:1;justify-content:center;padding:9px">+ Jugador</button>
+        <button onclick="openAddProspect()" class="btn-s btn-sm" style="flex:1;justify-content:center;padding:9px">+ Prospecto</button>
+        <button onclick="nav('calendario');setTimeout(()=>openAddEvento(),200)" class="btn-s btn-sm" style="flex:1;justify-content:center;padding:9px">+ Evento</button>
+      </div>`;
+    return;
+  }
+
+  /* ====== PROFE ====== */
   if(currentRole==='profe'){
-    if(g1)g1.style.display='none';if(g2)g2.style.display='none';if(ds)ds.style.display='none';
-    // Renderizar tarjeta "Mi Material" en el home del profe
-    setTimeout(renderProfeMaterialCard, 50);
-  }else{
-    if(g1)g1.style.display='';if(g2)g2.style.display='';if(ds)ds.style.display='';
-    // Ocultar tarjeta de material si existe
-    const mc = document.getElementById('profe-material-card');
-    if(mc) mc.remove();
+    const coaches=getCoaches();
+    const myAssigns=A.utilAssignments.filter(a=>a.coachName===currentCoachName);
+    el.innerHTML=`
+      <!-- Acción primaria: asistencia -->
+      <button onclick="nav('asistencia')" style="width:100%;padding:18px;border-radius:16px;background:var(--navy);color:#fff;font-size:16px;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;box-shadow:0 4px 16px rgba(13,31,60,.25)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Registrar asistencia
+        ${todaySess.length>0?`<span style="font-size:12px;opacity:.7">· ${todaySess.length} sesión${todaySess.length>1?'es':''} hoy</span>`:''}
+      </button>
+      <!-- Grid acciones profe -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+        <button onclick="nav('convocatoria')" style="padding:12px 8px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:center">
+          <div style="font-size:20px;margin-bottom:4px">📣</div>
+          <div style="font-size:11px;font-weight:700;color:var(--navy)">Convo</div>
+        </button>
+        <button onclick="nav('calendario')" style="padding:12px 8px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:center">
+          <div style="font-size:20px;margin-bottom:4px">📅</div>
+          <div style="font-size:11px;font-weight:700;color:var(--navy)">Agenda</div>
+        </button>
+        <button onclick="nav('utileria');setTimeout(()=>switchUtilTab('asignaciones',null),150)" style="padding:12px 8px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:center">
+          <div style="font-size:20px;margin-bottom:4px">📦</div>
+          <div style="font-size:11px;font-weight:700;color:var(--navy)">Mi material</div>
+        </button>
+      </div>
+      ${bdaysHoy.length>0?`<div style="background:rgba(201,168,76,.1);border:1.5px solid rgba(201,168,76,.3);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:24px">🎂</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--navy)">¡Hoy cumple años ${bdaysHoy.map(b=>b.player.name.split(' ')[0]).join(', ')}!</div>
+        <div style="font-size:11px;color:var(--muted)">No olvides felicitarlo en el entrenamiento</div></div>
+      </div>`:''}`;
+    return;
+  }
+
+  /* ====== MARKETING ====== */
+  if(currentRole==='marketing'){
+    const nextEvents=A.events.filter(e=>new Date(e.date+'T00:00:00')>=new Date()).sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,3);
+    const bdaysSoon=getBirthdaysIn(14,now);
+    el.innerHTML=`
+      <!-- Acción primaria: agregar evento -->
+      <button onclick="nav('calendario');setTimeout(openAddEvento,200)" style="width:100%;padding:16px;border-radius:16px;background:linear-gradient(135deg,#EC4899,#8B5CF6);color:#fff;font-size:15px;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;box-shadow:0 4px 16px rgba(236,72,153,.3)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+        + Agregar evento al calendario
+      </button>
+      <!-- Próximos eventos -->
+      ${nextEvents.length?`<div style="margin-bottom:10px">
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Próximos eventos</div>
+        ${nextEvents.map(e=>`<div onclick="nav('calendario')" style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--card);border-radius:10px;border:1.5px solid var(--border);margin-bottom:6px;cursor:pointer">
+          <div style="background:linear-gradient(135deg,#EC4899,#8B5CF6);border-radius:8px;width:38px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
+            <span style="font-size:14px;font-weight:900;color:#fff;line-height:1">${new Date(e.date+'T00:00:00').getDate()}</span>
+            <span style="font-size:8px;color:rgba(255,255,255,.8);text-transform:uppercase">${new Date(e.date+'T00:00:00').toLocaleString('es-MX',{month:'short'})}</span>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:var(--navy)">${e.title}</div>
+            <div style="font-size:11px;color:var(--muted)">${e.type||'Evento'}${e.time?' · '+e.time:''}</div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>`).join('')}
+      </div>`:'<div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;color:var(--muted);font-size:13px;margin-bottom:10px">Sin eventos próximos — ¡agrega el primero!</div>'}
+      <!-- Cumpleaños próximos -->
+      ${bdaysSoon.length?`<div style="background:rgba(201,168,76,.08);border:1.5px solid rgba(201,168,76,.25);border-radius:12px;padding:12px 14px">
+        <div style="font-size:10px;font-weight:700;color:#92400E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🎂 Cumpleaños próximos (14 días)</div>
+        ${bdaysSoon.map(b=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(201,168,76,.15)">
+          <span style="font-size:12px;font-weight:600;color:var(--navy)">${b.player.name.split(' ').slice(0,2).join(' ')}</span>
+          <span style="font-size:11px;color:#D97706">${b.daysUntil===0?'🎉 HOY':b.daysUntil===1?'Mañana':'En '+b.daysUntil+' días'} · ${b.age} años</span>
+        </div>`).join('')}
+      </div>`:''}`;
+    return;
+  }
+  if(currentRole==='administrativo'){
+    const pendAdmin=A.payments.filter(p=>p.month===m&&p.year===y&&p.status==='pending').length;
+    const prospectosPend=A.prospects.filter(p=>['Nuevo','Contactado','Clase agendada'].includes(p.status)).length;
+    el.innerHTML=`
+      <!-- Acción primaria: registrar cobro -->
+      <button onclick="openPagoModalConSelector()" style="width:100%;padding:16px;border-radius:16px;background:var(--ok);color:#fff;font-size:15px;font-weight:800;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;box-shadow:0 4px 16px rgba(16,185,129,.3)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Registrar cobro
+        ${cobradoHoy>0?`<span style="font-size:12px;opacity:.8">· $${cobradoHoy.toLocaleString()} hoy</span>`:''}
+      </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button onclick="nav('pagos')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid ${pendAdmin>0?'rgba(245,158,11,.4)':'var(--border)'};cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">${pendAdmin>0?'⚠️':'✅'}</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Pagos</div>
+          <div style="font-size:10px;color:${pendAdmin>0?'var(--warn)':'var(--muted)'}">${pendAdmin>0?pendAdmin+' pendientes':'Al corriente'}</div>
+        </button>
+        <button onclick="nav('jugadores');setTimeout(()=>switchJugView('prospectos',document.getElementById('jview-prospectos')),200)" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid ${prospectosPend>0?'rgba(37,99,235,.3)':'var(--border)'};cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">🎯</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Prospectos</div>
+          <div style="font-size:10px;color:var(--muted)">${prospectosPend} activos</div>
+        </button>
+        <button onclick="nav('calendario')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">📅</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Agenda</div>
+          <div style="font-size:10px;color:var(--muted)">Eventos del club</div>
+        </button>
+        <button onclick="nav('jugadores')" style="padding:13px 10px;border-radius:12px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:left">
+          <div style="font-size:18px;margin-bottom:4px">👥</div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy)">Jugadores</div>
+          <div style="font-size:10px;color:var(--muted)">${active.length} activos</div>
+        </button>
+      </div>`;
+    return;
   }
 }
-
 function renderProfeMaterialCard(){
   initUtilData();
   const coaches = getCoaches();
@@ -6772,7 +7036,7 @@ function renderProspectos(){
             ${p.channel?`<span style="padding:1px 7px;border-radius:10px;background:var(--bg);font-size:10.5px;font-weight:600">${p.channel}</span>`:''}
             ${daysAgo!==null?`<span style="font-size:10.5px;color:var(--muted)">${daysAgo===0?'Hoy':daysAgo===1?'Ayer':daysAgo+' dias'}</span>`:''}
           </div>
-          ${p.trialDate?`<div style="font-size:11.5px;color:var(--blue-m);font-weight:600;margin-top:5px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Clase muestra: ${p.trialDate} ${p.trialConfirmed?'<span style=\"color:var(--ok)\"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Confirmado</span>':'<span style=\"color:var(--warn)\">[espera] Por confirmar</span>'}</div>`:''}
+          ${p.trialDate?`<div style="font-size:11.5px;color:var(--blue-m);font-weight:600;margin-top:5px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Clase muestra: ${fmtDate(p.trialDate)} ${p.trialConfirmed?'<span style="color:var(--ok)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Confirmado</span>':'<span style="color:var(--warn)">Por confirmar</span>'}</div>`:''}
           ${p.nextAction?`<div style="font-size:11.5px;color:var(--ok);font-weight:600;margin-top:3px">-> ${p.nextAction}</div>`:''}
           ${p.notes?`<div style="font-size:11px;color:var(--muted);margin-top:5px;padding:6px 9px;background:var(--bg);border-radius:7px;font-style:italic">"${p.notes}"</div>`:''}
         </div>
@@ -6783,7 +7047,7 @@ function renderProspectos(){
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:9px">
         <button class="pc-btn wa" onclick="copyWA('${p.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/></svg> WhatsApp</button>
-        ${canEdit&&p.status!=='Inscrito'&&p.status!=='Perdido'?`<button class="pc-btn primary" onclick="openEditProspect('${p.id}')">[lapiz] Editar</button>`:''}
+        ${canEdit&&p.status!=='Inscrito'&&p.status!=='Perdido'?`<button class="pc-btn primary" onclick="openEditProspect('${p.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Editar</button>`:''}
         ${canEdit&&(p.status==='Asistio'||p.status==='Confirmado')?`<button class="pc-btn ok" onclick="convertProspectToPlayer('${p.id}')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Inscribir</button>`:''}
         ${canEdit&&p.status!=='Perdido'&&p.status!=='Inscrito'?`<button class="pc-btn danger" onclick="markProspectLost('${p.id}')">Perdido</button>`:''}
       </div>
@@ -7674,7 +7938,7 @@ const SRCH_CHIPS = [
   { key: 'jugador',   label: 'Jugadores',  roles: ['admin','profe','administrativo'] },
   { key: 'pago',      label: 'Pagos',      roles: ['admin','administrativo'] },
   { key: 'sesion',    label: 'Sesiones',   roles: ['admin','profe'] },
-  { key: 'evento',    label: 'Agenda',     roles: ['admin','profe','administrativo'] },
+  { key: 'evento',    label: 'Agenda',     roles: ['admin','profe','administrativo','marketing'] },
   { key: 'prospecto', label: 'Prospectos', roles: ['admin'] },
 ];
 
@@ -9816,7 +10080,21 @@ async function pullFromSheets(silent){
       A.events = pulled.events;
     }
     if(Array.isArray(pulled.prospects) && pulled.prospects.length > 0){
-      A.prospects = pulled.prospects;
+      A.prospects = pulled.prospects.map(function(p){
+        // Normalizar nombre: Sheets envía 'name' o 'childName'
+        if(!p.childName && p.name) p.childName = p.name;
+        if(!p.childName) p.childName = 'Sin nombre';
+        // Normalizar fecha de clase muestra
+        if(p.trialDate) {
+          var d = new Date(p.trialDate);
+          if(!isNaN(d.getTime())) {
+            p.trialDate = d.getFullYear()+'-'+(d.getMonth()+1).toString().padStart(2,'0')+'-'+d.getDate().toString().padStart(2,'0');
+          }
+        }
+        // Limpiar teléfono con #ERROR! (viene de Sheets cuando el + no tiene apostrofe)
+        if(p.phone && (p.phone.includes('#ERROR') || p.phone.includes('ERROR'))) p.phone = '';
+        return p;
+      });
     }
     if(Array.isArray(pulled.utileria) && pulled.utileria.length > 0){
       A.utileria = pulled.utileria;
@@ -9830,6 +10108,20 @@ async function pullFromSheets(silent){
     }
     if(Array.isArray(pulled.coaches) && pulled.coaches.length > 0){
       A.config.coaches = pulled.coaches;
+    }
+    // FIX: Aplicar categorías desde Sheets config
+    if(pulled.config && Array.isArray(pulled.config.categories) && pulled.config.categories.length > 0){
+      A.config.categories = pulled.config.categories;
+    }
+    // FIX: Auto-detectar categorías de los jugadores y agregarlas si no están en config
+    if(Array.isArray(pulled.players) && pulled.players.length > 0){
+      var knownCats = A.config.categories || [];
+      pulled.players.forEach(function(p){
+        if(p.category && knownCats.indexOf(p.category) < 0){
+          knownCats.push(p.category);
+        }
+      });
+      A.config.categories = knownCats;
     }
     // Notificaciones  merge por id, no reemplazar (para no perder leidas)
     if(Array.isArray(pulled.notifications) && pulled.notifications.length > 0){
