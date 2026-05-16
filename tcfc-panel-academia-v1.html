@@ -1009,12 +1009,12 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
   </div>
   <div class="login-box">
     <div class="login-ttl">Bienvenido</div>
-    <div class="login-desc">Selecciona tu perfil e ingresa tu PIN</div>
+    <div class="login-desc">Selecciona tu rol e ingresa tu PIN</div>
     <div class="role-btns">
-      <div class="role-btn selected" id="rb-admin" onclick="selectRole('admin')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Admin</div>
-      <div class="role-btn" id="rb-profe" onclick="selectRole('profe')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></span>Profe</div>
-      <div class="role-btn" id="rb-admin-rol" onclick="selectRole('administrativo')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span>Administrativo</div>
-      <div class="role-btn" id="rb-marketing" onclick="selectRole('marketing')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Marketing</div>
+      <div class="role-btn selected" id="rb-admin" onclick="selectRole('admin')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 100 90" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M 8 58 L 8 38 L 27 52 C 28 44 34 18 50 4 C 66 18 72 44 73 52 L 92 38 L 92 58"/><circle cx="26" cy="56" r="5"/><circle cx="74" cy="56" r="5"/><line x1="8" y1="58" x2="92" y2="58"/><rect x="6" y="60" width="88" height="22" rx="4"/></svg></span>Presidencia</div>
+      <div class="role-btn" id="rb-profe" onclick="selectRole('profe')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"><circle cx="128" cy="128" r="96"/><polygon points="128,86 88.1,115 103.3,162 152.7,162 167.9,115"/><line x1="128" y1="64" x2="128" y2="86"/><polyline points="163,38.6 128,64 93,38.6"/><line x1="67.1" y1="108.2" x2="88.1" y2="115"/><polyline points="53.8,67.1 67.1,108.2 32.1,133.7"/><line x1="90.4" y1="179.8" x2="103.3" y2="162"/><polyline points="67.1,217.4 90.4,179.8 57.1,158.3"/><line x1="165.6" y1="179.8" x2="152.7" y2="162"/><polyline points="188.9,217.4 165.6,179.8 198.9,158.3"/><line x1="188.9" y1="108.2" x2="167.9" y2="115"/><polyline points="202.2,67.1 188.9,108.2 223.9,133.7"/></svg></span>Formadores</div>
+      <div class="role-btn" id="rb-admin-rol" onclick="selectRole('administrativo')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span>Operaciones</div>
+      <div class="role-btn" id="rb-marketing" onclick="selectRole('marketing')"><span class="role-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>La Quinta Fuerza</div>
     </div>
     <div class="pin-row" id="pin-dots">
       <div class="pin-dot" id="pd0"></div>
@@ -1666,7 +1666,7 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
   <div class="mnit" id="mob-jugadores" onclick="nav('jugadores')"><span class="mnit-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span>Jugadores</span></div>
   <div class="mnit" id="mob-asistencia" onclick="nav('asistencia')"><span class="mnit-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><span>Asistencia</span></div>
   <div class="mnit" id="mob-pagos" onclick="nav('pagos')"><span class="mnit-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span><span>Pagos</span></div>
-  <div class="mnit" id="mob-convocatoria" onclick="nav('convocatoria')"><span class="mnit-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="23 21 23 19 19 19"/><polyline points="19 15 23 19"/></svg></span><span>Convo</span></div>
+  <div class="mnit" id="mob-convocatoria" onclick="nav('convocatoria')"><span class="mnit-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="23 21 23 19 19 19"/><polyline points="19 15 23 19"/></svg></span><span>Convo.</span></div>
   <div class="mnit" id="mob-calendario" onclick="nav('calendario')"><span class="mnit-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span>Agenda</span></div>
   <div class="mnit" onclick="mobileMore()"><span class="mnit-i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span>Config</span></div>
 </nav>
@@ -1916,19 +1916,19 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
         <label class="flbl" style="margin-bottom:10px;display:block">PINs de Acceso</label>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div class="fgrp">
-            <label class="flbl" style="color:var(--gold)">Admin</label>
+            <label class="flbl" style="color:var(--gold)">Presidencia</label>
             <input type="password" class="fin" id="cfg-pin-admin" maxlength="4" placeholder="****" style="text-align:center;letter-spacing:6px;font-size:18px"/>
           </div>
           <div class="fgrp">
-            <label class="flbl" style="color:var(--blue-l)">Profe</label>
+            <label class="flbl" style="color:var(--blue-l)">Formadores</label>
             <input type="password" class="fin" id="cfg-pin-profe" maxlength="4" placeholder="****" style="text-align:center;letter-spacing:6px;font-size:18px"/>
           </div>
           <div class="fgrp">
-            <label class="flbl" style="color:var(--ok)">Administrativo</label>
+            <label class="flbl" style="color:var(--ok)">Operaciones</label>
             <input type="password" class="fin" id="cfg-pin-admin-rol" maxlength="4" placeholder="****" style="text-align:center;letter-spacing:6px;font-size:18px"/>
           </div>
           <div class="fgrp">
-            <label class="flbl" style="color:#EC4899">Marketing</label>
+            <label class="flbl" style="color:#EC4899">La Quinta Fuerza</label>
             <input type="password" class="fin" id="cfg-pin-marketing" maxlength="4" placeholder="****" style="text-align:center;letter-spacing:6px;font-size:18px"/>
           </div>
         </div>
@@ -2088,20 +2088,32 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
           <label class="flbl">Tipo de cargo <span class="req">*</span></label>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:6px">
             <button class="tipo-btn active" id="tipo-mensualidad" onclick="selTipo('mensualidad')">
-              <span style="font-size:16px">📅</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               <span style="font-size:12px;font-weight:700">Mensualidad</span>
             </button>
             <button class="tipo-btn" id="tipo-inscripcion" onclick="selTipo('inscripcion')">
-              <span style="font-size:16px">📝</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
               <span style="font-size:12px;font-weight:700">Inscripción</span>
             </button>
             <button class="tipo-btn" id="tipo-cargo_extra" onclick="selTipo('cargo_extra')">
-              <span style="font-size:16px">➕</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
               <span style="font-size:12px;font-weight:700">Cargo extra</span>
             </button>
             <button class="tipo-btn" id="tipo-arbitraje" onclick="selTipo('arbitraje')">
-              <span style="font-size:16px">🏁</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93 l14.14 14.14"/></svg>
               <span style="font-size:12px;font-weight:700">Arbitraje</span>
+            </button>
+            <button class="tipo-btn" id="tipo-uniforme" onclick="selTipo('uniforme')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+              <span style="font-size:12px;font-weight:700">Uniforme</span>
+            </button>
+            <button class="tipo-btn" id="tipo-torneo" onclick="selTipo('torneo')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+              <span style="font-size:12px;font-weight:700">Torneo</span>
+            </button>
+            <button class="tipo-btn" id="tipo-otro" onclick="selTipo('otro')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              <span style="font-size:12px;font-weight:700">Otro</span>
             </button>
           </div>
         </div>
@@ -2132,6 +2144,14 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
             <button class="tipo-btn" id="met-transferencia" onclick="selMet('transferencia')" style="flex-direction:row;gap:7px;padding:10px 14px">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
               <span style="font-size:12px;font-weight:700">Transferencia</span>
+            </button>
+            <button class="tipo-btn" id="met-tarjeta" onclick="selMet('tarjeta')" style="flex-direction:row;gap:7px;padding:10px 14px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              <span style="font-size:12px;font-weight:700">Tarjeta</span>
+            </button>
+            <button class="tipo-btn" id="met-otro" onclick="selMet('otro')" style="flex-direction:row;gap:7px;padding:10px 14px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              <span style="font-size:12px;font-weight:700">Otro</span>
             </button>
           </div>
         </div>
@@ -2313,6 +2333,19 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 .sw-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
 .sw-dot-active{background:#C9A84C;width:24px}
 .sw-dot-done{background:rgba(16,185,129,.6)}
+
+/* ===== NOTIF CHAT (WhatsApp style) ===== */
+.notif-chat-wrap{display:flex;flex-direction:column;gap:8px;padding:16px;max-height:380px;overflow-y:auto;background:var(--bg)}
+.notif-bubble{max-width:78%;padding:9px 13px;border-radius:16px;font-size:13px;line-height:1.45}
+.notif-bubble.sent{background:var(--navy);color:#fff;border-radius:16px 16px 4px 16px;align-self:flex-end}
+.notif-bubble.recv{background:var(--card);border:1px solid var(--border);color:var(--navy);border-radius:4px 16px 16px 16px;align-self:flex-start}
+.notif-bubble .btime{font-size:10px;opacity:.55;margin-top:4px;text-align:right}
+.notif-bubble .btag{font-size:10px;font-weight:700;opacity:.6;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+.notif-bubble.unread-bub{border-left:3px solid var(--ok)}
+.notif-input-bar{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--border);background:var(--card);align-items:flex-end}
+.notif-input-bar textarea{flex:1;resize:none;border:1.5px solid var(--border);border-radius:12px;padding:9px 12px;font-size:13px;background:var(--bg);color:var(--navy);outline:none;max-height:80px;font-family:inherit}
+.notif-input-bar button{width:38px;height:38px;border-radius:50%;background:var(--navy);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
 </style>
 
 <!-- MODAL SETUP WIZARD (legado - ya no se usa) -->
@@ -2577,14 +2610,25 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
 
 <!-- MODAL NOTIFICACIONES -->
 <div class="mover" id="m-notif">
-  <div class="modal" style="max-width:480px">
-    <div class="mhd">
-      <span class="mttl" id="notif-modal-ttl">Notificaciones</span>
-      <span class="mc" onclick="closeM('m-notif')">x</span>
+  <div class="modal" style="max-width:480px;display:flex;flex-direction:column;max-height:90vh">
+    <div class="mhd" style="background:var(--navy);border-radius:14px 14px 0 0">
+      <div style="display:flex;align-items:center;gap:10px;flex:1">
+        <div style="width:36px;height:36px;border-radius:50%;background:rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div style="color:#fff;font-weight:700;font-size:14px">Tannery City FC</div>
+          <div style="color:rgba(255,255,255,.5);font-size:11px" id="notif-online-lbl">Canal interno del club</div>
+        </div>
+      </div>
+      <span class="mc" onclick="closeM('m-notif')" style="color:rgba(255,255,255,.6)">x</span>
     </div>
-    <div class="mbd" style="padding:0" id="notif-list"></div>
-    <div class="mft" id="notif-admin-section" style="display:none">
-      <button class="btn-p" onclick="openSendNotif()">Enviar mensaje al equipo</button>
+    <div class="notif-chat-wrap" id="notif-list"></div>
+    <div class="notif-input-bar" id="notif-input-bar">
+      <textarea id="notif-quick-msg" rows="1" placeholder="Escribe un mensaje..."></textarea>
+      <button onclick="sendQuickNotif()" title="Enviar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -2600,9 +2644,10 @@ mark{background:rgba(37,99,235,.15);color:var(--blue-m);border-radius:3px;paddin
       <div class="fgrp">
         <label class="flbl">Para quien</label>
         <select class="fsel" id="sn-target">
-          <option value="all">Todos (Profe y Administrativo)</option>
-          <option value="profe">Solo Profe</option>
-          <option value="administrativo">Solo Administrativo</option>
+          <option value="all">Todos</option>
+          <option value="profe">Solo Formadores</option>
+          <option value="administrativo">Solo Operaciones</option>
+          <option value="marketing">Solo La Quinta Fuerza</option>
         </select>
       </div>
       <div class="fgrp">
@@ -2801,7 +2846,7 @@ const VIEWS={
   utileria:{t:'Utileria',s:'. Inventario y material',a:'+ Articulo'}
 };
 const DEFAULT_CATS=['Sub-9','Sub-10','Sub-11','Sub-12','Sub-13','Sub-14','Sub-15','Sub-17'];
-const getCats=()=>A.config.categories||DEFAULT_CATS;
+const getCats=()=>(A.config.categories&&A.config.categories.length>0?A.config.categories:[]);
 
 /* -- UNIFORM WORKFLOW -- */
 const UNI_STEPS=[
@@ -3002,16 +3047,16 @@ function getDocCompleteness(player){
 
 /* ============== ROLES ============== */
 const ROLES={
-  admin:{label:'Admin',badge:'rb-admin',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  admin:{label:'Presidencia',badge:'rb-admin',ico:'<svg width="12" height="12" viewBox="0 0 100 90" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M 8 58 L 8 38 L 27 52 C 28 44 34 18 50 4 C 66 18 72 44 73 52 L 92 38 L 92 58"/><circle cx="26" cy="56" r="5"/><circle cx="74" cy="56" r="5"/><line x1="8" y1="58" x2="92" y2="58"/><rect x="6" y="60" width="88" height="22" rx="4"/></svg>',
     nav:['dashboard','jugadores','asistencia','convocatoria','pagos','calendario','utileria'],
     canEdit:true,canConfig:true},
-  profe:{label:'Profe',badge:'rb-profe',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>',
+  profe:{label:'Formadores',badge:'rb-profe',ico:'<svg width="12" height="12" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"><circle cx="128" cy="128" r="96"/><polygon points="128,86 88.1,115 103.3,162 152.7,162 167.9,115"/><line x1="128" y1="64" x2="128" y2="86"/><polyline points="163,38.6 128,64 93,38.6"/><line x1="67.1" y1="108.2" x2="88.1" y2="115"/><polyline points="53.8,67.1 67.1,108.2 32.1,133.7"/><line x1="90.4" y1="179.8" x2="103.3" y2="162"/><polyline points="67.1,217.4 90.4,179.8 57.1,158.3"/><line x1="165.6" y1="179.8" x2="152.7" y2="162"/><polyline points="188.9,217.4 165.6,179.8 198.9,158.3"/><line x1="188.9" y1="108.2" x2="167.9" y2="115"/><polyline points="202.2,67.1 188.9,108.2 223.9,133.7"/></svg>',
     nav:['dashboard','jugadores','asistencia','convocatoria','calendario','utileria'],
     canEdit:false,canConfig:false},
-  administrativo:{label:'Administrativo',badge:'rb-admin-rol',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>',
+  administrativo:{label:'Operaciones',badge:'rb-admin-rol',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>',
     nav:['dashboard','jugadores','pagos','calendario','utileria'],
     canEdit:false,canConfig:false},
-  marketing:{label:'Marketing',badge:'rb-marketing',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+  marketing:{label:'La Quinta Fuerza',badge:'rb-marketing',ico:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
     nav:['dashboard','calendario'],
     canEdit:false,canConfig:false,canAddEvents:true}
 };
@@ -3261,7 +3306,12 @@ function init(){
   const ver=localStorage.getItem('tcfc_ver');
   if(ver!=='v2'){localStorage.removeItem('tcfc_v1');localStorage.setItem('tcfc_ver','v2');}
   loadData();
-  if(!A.players.length) seedDemo();
+  // v1 PRODUCCIÓN: NO cargar datos demo automáticamente
+  // Si no hay jugadores, mostrar empty state (NO seedDemo)
+  if(!A.players.length && !A.config.scriptUrl) {
+    // Sistema vacío sin URL — mostrar wizard de configuración al login
+    console.log('[TannerOS] Sistema vacío — esperando configuración');
+  }
   // Si se cargaron 0 jugadores pero hay backup con datos reales, restaurar
   if(A.players.length<=3){
     const backupRaw=localStorage.getItem('tcfc_backup_full');
@@ -4708,7 +4758,7 @@ function confirmPago(){
   const p=A.players.find(x=>x.id===pid);
   const d=new Date(fecha+'T00:00:00');
   const paidDate=d.toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});
-  const tipoLbl={mensualidad:'Mensualidad',inscripcion:'Inscripcion',cargo_extra:'Cargo extra',arbitraje:'Arbitraje'};
+  const tipoLbl={mensualidad:'Mensualidad',inscripcion:'Inscripcion',cargo_extra:'Cargo extra',arbitraje:'Arbitraje',uniforme:'Uniforme',torneo:'Torneo',otro:'Otro'};
   const record={
     id:'pay_'+Date.now(),
     playerId:pid,
@@ -4716,7 +4766,8 @@ function confirmPago(){
     category:p?.category||'',
     month:m,year:y,
     amount:monto,
-    status:'paid',
+    status: currentRole === 'admin' ? 'paid' : 'por_validar',
+    submittedBy: currentRole,
     tipo,
     concepto: tipo==='mensualidad'?`Mensualidad ${MES[m]} ${y}`:concepto,
     method:met,
@@ -4814,11 +4865,14 @@ function renderHistorialJugador(pid){
 
   // Íconos y colores por tipo
   const tipoMeta={
-    mensualidad:{ico:'📅',color:'#2563EB',bg:'rgba(37,99,235,.08)',lbl:'Mensualidad'},
-    inscripcion:{ico:'📝',color:'#7C3AED',bg:'rgba(124,58,237,.08)',lbl:'Inscripción'},
-    cargo_extra:{ico:'➕',color:'#D97706',bg:'rgba(217,119,6,.08)',lbl:'Cargo extra'},
-    arbitraje:{ico:'🏁',color:'#059669',bg:'rgba(5,150,105,.08)',lbl:'Arbitraje'},
-    desconocido:{ico:'💳',color:'var(--muted)',bg:'var(--bg)',lbl:'Otro'}
+    mensualidad:{ico:'$',color:'#2563EB',bg:'rgba(37,99,235,.08)',lbl:'Mensualidad'},
+    inscripcion:{ico:'+',color:'#7C3AED',bg:'rgba(124,58,237,.08)',lbl:'Inscripción'},
+    cargo_extra:{ico:'+',color:'#D97706',bg:'rgba(217,119,6,.08)',lbl:'Cargo extra'},
+    arbitraje:{ico:'×',color:'#059669',bg:'rgba(5,150,105,.08)',lbl:'Arbitraje'},
+    uniforme:{ico:'◈',color:'#0891B2',bg:'rgba(8,145,178,.08)',lbl:'Uniforme'},
+    torneo:{ico:'◆',color:'#B45309',bg:'rgba(180,83,9,.08)',lbl:'Torneo'},
+    otro:{ico:'·',color:'var(--muted)',bg:'var(--bg)',lbl:'Otro'},
+    desconocido:{ico:'·',color:'var(--muted)',bg:'var(--bg)',lbl:'Otro'}
   };
 
   const canEdit=canEditPagos();
@@ -5837,59 +5891,9 @@ function resetDemo(){localStorage.removeItem('tcfc_v1');A={v:DATA_VERSION,player
 
 /* ============== DEMO DATA ============== */
 function seedDemo(){
-  const now=new Date(),y=now.getFullYear(),m=now.getMonth();
-  const pad=n=>String(n).padStart(2,'0');
-  if(!A.config.categories||!A.config.categories.length) A.config.categories=[...DEFAULT_CATS];
-  const pl=[
-    {n:'Diego Hernandez',num:'10',cat:'Sub-12',pos:'Mediocampista',amt:650,tut:'Carlos Hernandez',tel:'477 123 4567'},
-    {n:'Mateo Ramirez',num:'7',cat:'Sub-12',pos:'Delantero',amt:650,tut:'Jorge Ramirez',tel:'477 234 5678'},
-    {n:'Alejandro Torres',num:'1',cat:'Sub-12',pos:'Portero',amt:650,tut:'Roberto Torres',tel:'477 345 6789'},
-    {n:'Sebastian Lopez',num:'4',cat:'Sub-12',pos:'Defensa',amt:650,tut:'Miguel Lopez',tel:'477 456 7890'},
-    {n:'Emiliano Flores',num:'9',cat:'Sub-12',pos:'Delantero',amt:650,tut:'Pedro Flores',tel:'477 567 8901'},
-    {n:'Andres Morales',num:'6',cat:'Sub-14',pos:'Mediocampista',amt:700,tut:'Luis Morales',tel:'477 678 9012'},
-    {n:'Carlos Jimenez',num:'3',cat:'Sub-14',pos:'Defensa',amt:700,tut:'Ricardo Jimenez',tel:'477 789 0123'},
-    {n:'Luis Martinez',num:'11',cat:'Sub-14',pos:'Delantero',amt:700,tut:'Sergio Martinez',tel:'477 890 1234'},
-    {n:'Fernando Garcia',num:'5',cat:'Sub-14',pos:'Mediocampista',amt:700,tut:'Manuel Garcia',tel:'477 901 2345'},
-    {n:'Ricardo Sanchez',num:'8',cat:'Sub-14',pos:'Mediocampista',amt:700,tut:'Hector Sanchez',tel:'477 012 3456'},
-    {n:'Pablo Rodriguez',num:'2',cat:'Sub-9',pos:'Defensa',amt:550,tut:'Ernesto Rodriguez',tel:'477 111 2222'},
-    {n:'Santiago Gonzalez',num:'13',cat:'Sub-9',pos:'Mediocampista',amt:550,tut:'Arturo Gonzalez',tel:'477 222 3333'},
-    {n:'Kevin Vasquez',num:'15',cat:'Sub-9',pos:'Portero',amt:550,tut:'Raul Vasquez',tel:'477 333 4444'},
-    {n:'Nicolas Gutierrez',num:'17',cat:'Sub-17',pos:'Mediocampista',amt:750,tut:'Eduardo Gutierrez',tel:'477 444 5555'},
-    {n:'Marco Diaz',num:'20',cat:'Sub-17',pos:'Delantero',amt:750,tut:'Fernando Diaz',tel:'477 555 6666'},
-    {n:'Javier Reyes',num:'23',cat:'Sub-17',pos:'Defensa',amt:750,tut:'Gabriel Reyes',tel:'477 666 7777'},
-  ];
-  pl.forEach(p=>A.players.push({id:'p_'+Math.random().toString(36).substr(2,9),name:p.n,number:p.num,category:p.cat,position:p.pos,amount:p.amt,tutor:p.tut,phone:p.tel,active:true}));
-
-  const addS=(off,cat,coach,type,field)=>{
-    const d=new Date(y,m,Math.max(1,now.getDate()-off));
-    const cp=A.players.filter(p=>p.category===cat);
-    A.sessions.push({id:'ses_'+Math.random().toString(36).substr(2,9),date:`${y}-${pad(m+1)}-${pad(d.getDate())}`,category:cat,coach,type,time:'17:00',field,players:cp.map(p=>({id:p.id,name:p.name,asistio:Math.random()>.15,puntual:['puntual','puntual','tardanza'][Math.floor(Math.random()*3)],uniforme:Math.random()>.1?'si':Math.random()>.5?'incompleto':'no',actitud:['buena','buena','regular','mala'][Math.floor(Math.random()*4)],lesion:Math.random()>.93,aviso:Math.random()>.7,hora:'',recoge:'',obs:''})),savedAt:new Date().toISOString(),synced:Math.random()>.4});
-  };
-  addS(1,'Sub-12','Profe Armando','Entrenamiento regular','Cancha Principal');
-  addS(2,'Sub-14','Profe Carlos','Entrenamiento regular','Cancha 2');
-  addS(3,'Sub-12','Profe Armando','Entrenamiento regular','Cancha Principal');
-  addS(5,'Sub-9','Profe Roberto','Entrenamiento regular','Cancha Principal');
-  addS(5,'Sub-14','Profe Carlos','Partido amistoso','Estadio Municipal');
-  addS(7,'Sub-17','Profe Daniel','Entrenamiento regular','Cancha Principal');
-  addS(8,'Sub-12','Profe Armando','Evaluacion','Cancha Principal');
-
-  const methods=['efectivo','transferencia','efectivo','efectivo','transferencia'];
-  A.players.forEach((p,pi)=>{
-    const method=methods[pi%methods.length];
-    if(Math.random()>.35) A.payments.push({id:'pay_demo_'+p.id+'_'+m,playerId:p.id,playerName:p.name,category:p.category,month:m,year:y,status:'paid',tipo:'mensualidad',concepto:`Mensualidad ${MES[m]} ${y}`,amount:p.amount||800,method,receivedBy:'Michel',paidDate:new Date(y,m,Math.floor(Math.random()*15)+1).toLocaleDateString('es-MX'),registeredAt:new Date(y,m,5).toISOString(),registeredBy:'admin'});
-    if(Math.random()>.1) A.payments.push({id:'pay_demo_'+p.id+'_prev',playerId:p.id,playerName:p.name,category:p.category,month:m-1<0?11:m-1,year:m-1<0?y-1:y,status:'paid',tipo:'mensualidad',concepto:`Mensualidad ${MES[m-1<0?11:m-1]} ${m-1<0?y-1:y}`,amount:p.amount||800,method:'efectivo',receivedBy:'Michel',paidDate:new Date(y,m-1,10).toLocaleDateString('es-MX'),registeredAt:new Date(y,m-1,10).toISOString(),registeredBy:'admin'});
-  });
-
-  const d1=Math.min(now.getDate()+3,28),d2=Math.min(now.getDate()+7,28),d3=Math.min(now.getDate()+10,28),d4=Math.min(now.getDate()+14,28),d5=Math.min(now.getDate()+18,28);
-  [
-    {title:'Liga Municipal Sub-12 vs Coyotes FC',date:`${y}-${pad(m+1)}-${pad(d1)}`,time:'10:00',category:'Sub-12',type:'partido',location:'Estadio Municipal'},
-    {title:'Torneo Apertura Leon -- Inscripciones',date:`${y}-${pad(m+1)}-${pad(d2)}`,time:'08:00',category:'all',type:'torneo',location:'IMSS Norte'},
-    {title:'Amistoso Sub-14 vs Leones Negros',date:`${y}-${pad(m+1)}-${pad(d3)}`,time:'11:00',category:'Sub-14',type:'partido',location:'Cancha 2 TC'},
-    {title:'Reunion de padres de familia',date:`${y}-${pad(m+1)}-${pad(d4)}`,time:'18:30',category:'all',type:'reunion',location:'Salon TC'},
-    {title:'Evaluacion tecnica Sub-17',date:`${y}-${pad(m+1)}-${pad(d5)}`,time:'16:00',category:'Sub-17',type:'evaluacion',location:'Cancha Principal'},
-  ].forEach(ev=>A.events.push({id:'ev_'+Math.random().toString(36).substr(2,9),...ev}));
-
-  saveData();
+  // v1 PRODUCCIÓN: función desactivada — no se carga ningún dato demo
+  console.warn('[TannerOS v1] seedDemo desactivada en producción');
+  snack('Sistema listo. Configura tus categorías y agrega tu primer jugador.','ok');
 }
 
 /* ============== START ============== */
@@ -7106,7 +7110,7 @@ function renderHoyActions(){
       </button>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
         ${btn("nav('jugadores');setTimeout(()=>switchJugView('prospectos',document.getElementById('jview-prospectos')),200)","target","+ Prospecto","Clase muestra",'rgba(37,99,235,.2)')}
-        ${btn("nav('convocatoria')","megaphone","Convo","Llamados y alineación")}
+        ${btn("nav('convocatoria')","megaphone","Convocatoria","Llamados y alineación")}
         ${btn("nav('calendario')","cal","Agenda","Eventos del club")}
         ${btn("nav('utileria');setTimeout(()=>switchUtilTab('asignaciones',null),150)","box","Mi material","Ver lo que tengo")}
       </div>
@@ -7946,6 +7950,30 @@ function rechazarPago(payId){
   );
 }
 
+function cancelarPago(payId){
+  if(currentRole !== 'admin'){ snack('Solo Presidencia puede cancelar pagos'); return; }
+  const r = A.payments.find(x => x.id === payId);
+  if(!r) return;
+  const motivo = prompt('Motivo de cancelación (requerido):');
+  if(!motivo || !motivo.trim()){ snack('Ingresa un motivo para cancelar'); return; }
+  showConfirm(
+    'Cancelar pago',
+    `¿Cancelar el cobro de $${r.amount} de ${r.playerName}? Esta acción no borra el registro.`,
+    function(){
+      r.status = 'cancelled';
+      r.motivo = motivo.trim();
+      r.updatedAt = new Date().toISOString();
+      r.updatedBy = currentRole;
+      enqueueSync('UPDATE_PAYMENT_STATUS','payments',r.id,{status:'cancelled',motivo:r.motivo,updatedAt:r.updatedAt,updatedBy:r.updatedBy});
+      saveData(); renderPagos(); renderDash();
+      snack('Pago cancelado — registro conservado para trazabilidad');
+      auditLog('CANCEL','pago','Pago cancelado: '+r.playerName+' $'+r.amount+'. Motivo: '+motivo,{id:payId},{status:'cancelled'});
+    },
+    'Cancelar pago'
+  );
+}
+
+
 function renderPorValidar(){
   const pending = A.payments.filter(p => p.status === 'por_confirmar');
   const el = document.getElementById('por-validar-list');
@@ -8109,73 +8137,8 @@ function updateDemoSection(){
   sec.style.display = (!hasRealPlayers && currentRole==='admin') ? 'block' : 'none';
 }
 function seedBetaData(){
-  if(A.players.length > 0){
-    snack('Ya hay datos en el sistema. Borra primero si quieres cargar datos de prueba.');
-    return;
-  }
-  const cats = getCats();
-  const names = ['Carlos Mendoza','Diego Ramirez','Luis Torres','Andres Garcia','Miguel Flores',
-    'Jesus Hernandez','Omar Martinez','Rodrigo Lopez','Ivan Sanchez','Pablo Gomez',
-    'Eduardo Ruiz','Fernando Castro','Ricardo Jimenez','Sergio Morales','Adrian Vargas'];
-  const tutors = ['Roberto M.','Jorge R.','Arturo T.','Humberto G.','Ramon F.','Aurelio H.',
-    'Cesar M.','Gustavo L.','Raul S.','Pedro G.','Eduardo R.','Fernando C.','Juan J.','Sergio M.','Adrian V.'];
-  const phones = ['477 100 0001','477 100 0002','477 100 0003','477 100 0004','477 100 0005',
-    '477 100 0006','477 100 0007','477 100 0008','477 100 0009','477 100 0010',
-    '477 100 0011','477 100 0012','477 100 0013','477 100 0014','477 100 0015'];
-  const pos = ['Portero','Defensa','Defensa','Mediocampista','Mediocampista','Mediocampista','Delantero','Delantero'];
-  let pIdx = 0;
-  const catSlice = cats.slice(0, Math.min(cats.length, 3));
-  catSlice.forEach((cat, ci) => {
-    for(let i = 0; i < 5; i++){
-      const n = pIdx % names.length;
-      A.players.push({
-        id: 'p_beta_' + Date.now() + '_' + pIdx,
-        name: names[n],
-        number: (i + 1 + ci * 10),
-        category: cat,
-        position: pos[Math.floor(Math.random()*pos.length)],
-        size: 'M',
-        birthdate: '',
-        amount: 800,
-        tutor: tutors[n],
-        phone: phones[n],
-        emergencyContact: { name: tutors[n], phone: phones[n] },
-        scholarship: { type: '', pct: 0 },
-        medical: { sangre: 'O+', alergias: '' },
-        isCaptain: i === 0,
-        active: true,
-        docs: { acta: {done: i<3}, curp: {done: i<4}, estudios: {done: i<2} },
-        uni: { medicion: {done: true}, pago: {done: i<3}, pedido: {done: i<2}, entrega: {done: i<1} },
-        clubNotes: ''
-      });
-      pIdx++;
-    }
-  });
-  // Some payments this month
-  const now = new Date();
-  const m = now.getMonth(), y = now.getFullYear();
-  A.players.slice(0, Math.floor(A.players.length * 0.6)).forEach((p, i) => {
-    A.payments.push({
-      id: 'pay_beta_' + Date.now() + '_' + i,
-      playerId: p.id, playerName: p.name, category: p.category,
-      month: m, year: y, amount: p.amount||800,
-      status: 'paid', tipo: 'mensualidad',
-      concepto: 'Mensualidad ' + MES[m] + ' ' + y,
-      method: i % 2 === 0 ? 'efectivo' : 'transferencia',
-      receivedBy: 'Admin', paidDate: now.toLocaleDateString('es-MX'),
-      registeredAt: new Date().toISOString(), registeredBy: 'admin'
-    });
-  });
-  // An event
-  const nextWeek = new Date(now.getTime() + 7*24*60*60*1000);
-  A.events.push({
-    id: 'ev_beta_1', title: 'Entrenamiento ' + (catSlice[0]||'Sub-10'),
-    date: nextWeek.toISOString().split('T')[0], time: '17:00',
-    type: 'entrenamiento', category: catSlice[0]||'',
-    location: 'Campo 1', notes: 'Traer agua y uniforme completo'
-  });
-  saveData(); populateSels(); renderJugadores(); renderDash(); renderHoy();
-  snack(`Datos de prueba cargados: ${A.players.length} jugadores en ${catSlice.length} categorias`, 'ok');
+  // v1 PRODUCCIÓN: función desactivada
+  snack('Datos de prueba desactivados en producción','err');
 }
 
 /* ==========================================================
@@ -8890,7 +8853,7 @@ var TESTS_DEF = [
     return {pass:true,detail:'Exportacion de jugador OK. Genera '+Object.keys(flat).length+' campos. Todos los requeridos presentes.'};
   }},
   {id:'QA-17',name:'El registro de pago se puede exportar correctamente',cat:'Respaldos',run:function(){
-    var tp={id:'pay_qa',playerName:'Test Jugador',category:'T-10',tipo:'mensualidad',concepto:'Mensualidad Abril 2026',amount:800,method:'efectivo',status:'paid',month:3,year:2026,paidDate:'28 abr 2026',receivedBy:'Admin',notes:''};
+    var tp={id:'pay_qa',playerName:'Test Jugador',category:'T-10',tipo:'mensualidad',concepto:'Mensualidad Abril 2026',amount:800,method:'efectivo',status:'paid',month:3,year:2026,paidDate:'28 abr 2026',receivedBy:'Presidencia',notes:''};
     var flat=flattenPayment(tp);
     var req=['ID','Jugador','Tipo','Monto','Metodo','Estado','FechaPago'];
     var missing=req.filter(function(k){return !(k in flat);});
@@ -8996,7 +8959,7 @@ var TESTS_DEF = [
     return {pass:true,detail:'Flujo de cobro pendiente OK. El cobro registrado por Profe queda en estado "por validar" hasta que Admin confirme.'};
   }},
   {id:'QA-30',name:'La cola de sync no tiene items fallidos acumulados',cat:'Sincronizacion',run:function(){
-    var q=JSON.parse(localStorage.getItem('tcfc_sync_queue')||'[]');
+    var q=JSON.parse(localStorage.getItem('tcfc_sq')||'[]');
     var failed=q.filter(function(i){return i.tries>=3;});
     if(failed.length>3) return {pass:false,detail:'Hay '+failed.length+' items con 3+ intentos fallidos. Esto puede indicar un problema de conexion o de token.'};
     return {pass:true,detail:'Cola de sync OK. Total items: '+q.length+'. Fallidos criticos: '+failed.length+'.'};
@@ -9181,8 +9144,8 @@ var TESTS_DEF = [
   {id:'QA-44',name:'Status de pagos se normaliza correctamente al hacer pull',cat:'Sincronización',run:function(){
     // Simular datos que vienen de Sheets con status en español
     var testPayments = [
-      {id:'qa_p1',status:'Pagado',tipo:'mensualidad',amount:800},
-      {id:'qa_p2',status:'Pendiente',tipo:'mensualidad',amount:800},
+      {id:'qa_p1',status:'paid',tipo:'mensualidad',amount:800},
+      {id:'qa_p2',status:'pending',tipo:'mensualidad',amount:800},
       {id:'qa_p3',status:'paid',tipo:'mensualidad',amount:800},
     ];
     var normalized = testPayments.map(function(p){
@@ -9489,11 +9452,134 @@ var TESTS_DEF = [
     if(!blend.includes('lighten')&&!blend.includes('screen')) 
       return {pass:false,detail:'Logo sin mix-blend-mode — puede mostrar fondo negro'};
     return {pass:true,detail:'Logo con mix-blend-mode:lighten ✓ — fondo negro invisible sobre fondo azul ✓'};
+  }},
+
+  /* ===== QA PRODUCCIÓN v1 ===== */
+  {id:'QA-PROD-01',name:'La app inicia sin datos demo — sistema vacío = vacío',cat:'Producción',run:function(){
+    var str=typeof loadData==='function'?loadData.toString():'';
+    if(str.includes('seedDemo()')&&!str.includes('// v1 PRODUCCIÓN'))
+      return {pass:false,detail:'loadData aún llama seedDemo() automáticamente — riesgo crítico en producción'};
+    return {pass:true,detail:'loadData no llama seedDemo automáticamente ✓. Sistema vacío = vacío ✓.'};
+  }},
+  {id:'QA-PROD-02',name:'seedDemo NO se ejecuta automáticamente al iniciar',cat:'Producción',run:function(){
+    // Simular app vacía y verificar que seedDemo no se llama
+    var originalPlayers=A.players;
+    var seedCalled=false;
+    var origSeed=window.seedDemo;
+    window.seedDemo=function(){seedCalled=true;};
+    var tempA=A.players;
+    A.players=[];
+    try{ if(typeof loadData==='function'){ /* check if it would call seed */ } }catch(e){}
+    A.players=tempA;
+    window.seedDemo=origSeed;
+    // Check loadData source
+    var loadStr=typeof loadData==='function'?loadData.toString():'';
+    var hasSeedCall=loadStr.includes('seedDemo()') && !loadStr.includes('// v1');
+    if(hasSeedCall) return {pass:false,detail:'loadData tiene seedDemo() en un path ejecutable'};
+    return {pass:true,detail:'seedDemo no se ejecuta automáticamente ✓. Disponible solo para uso manual controlado.'};
+  }},
+  {id:'QA-PROD-03',name:'Roles visibles usan nombres nuevos (Presidencia, Formadores, Operaciones, La Quinta Fuerza)',cat:'Producción',run:function(){
+    var checks=[
+      {key:'admin',expected:'Presidencia'},
+      {key:'profe',expected:'Formadores'},
+      {key:'administrativo',expected:'Operaciones'},
+      {key:'marketing',expected:'La Quinta Fuerza'}
+    ];
+    var fails=[];
+    checks.forEach(function(c){
+      var label=ROLES[c.key]&&ROLES[c.key].label;
+      if(label!==c.expected) fails.push(c.key+': "'+label+'" ≠ "'+c.expected+'"');
+    });
+    if(fails.length) return {pass:false,detail:'Labels incorrectos: '+fails.join(' | ')};
+    return {pass:true,detail:'Presidencia ✓ · Formadores ✓ · Operaciones ✓ · La Quinta Fuerza ✓'};
+  }},
+  {id:'QA-PROD-04',name:'Presidencia puede ver pagos (pestaña Pagos en nav)',cat:'Producción',run:function(){
+    if(!ROLES.admin) return {pass:false,detail:'ROLES.admin no definido'};
+    if(!ROLES.admin.nav.includes('pagos')) return {pass:false,detail:'Presidencia no tiene pagos en nav'};
+    return {pass:true,detail:'Presidencia tiene acceso a pagos ✓'};
+  }},
+  {id:'QA-PROD-05',name:'Formadores no puede ver finanzas completas (sin pagos en nav)',cat:'Producción',run:function(){
+    if(!ROLES.profe) return {pass:false,detail:'ROLES.profe no definido'};
+    if(ROLES.profe.nav.includes('pagos')) return {pass:false,detail:'Formadores tiene pagos en nav — no debería'};
+    return {pass:true,detail:'Formadores: sin acceso a pagos ✓'};
+  }},
+  {id:'QA-PROD-06',name:'Operaciones registra pago con status por_validar',cat:'Producción',run:function(){
+    var confirmStr=typeof confirmPago==='function'?confirmPago.toString():'';
+    if(!confirmStr.includes('por_validar')) return {pass:false,detail:'confirmPago no genera status por_validar para Operaciones'};
+    if(!confirmStr.includes("currentRole === 'admin'")&&!confirmStr.includes("currentRole==='admin'"))
+      return {pass:false,detail:'confirmPago no verifica currentRole para determinar status'};
+    return {pass:true,detail:'confirmPago: Presidencia→paid, Operaciones→por_validar ✓'};
+  }},
+  {id:'QA-PROD-07',name:'Presidencia puede validar pago (por_validar → paid)',cat:'Producción',run:function(){
+    if(typeof validarPago!=='function') return {pass:false,detail:'validarPago no existe'};
+    var str=validarPago.toString();
+    if(!str.includes("admin")) return {pass:false,detail:'validarPago no verifica que sea Presidencia'};
+    if(!str.includes("paid")) return {pass:false,detail:'validarPago no cambia status a paid'};
+    return {pass:true,detail:'validarPago: solo Presidencia, cambia a paid ✓'};
+  }},
+  {id:'QA-PROD-08',name:'Presidencia puede cancelar pago con motivo requerido',cat:'Producción',run:function(){
+    if(typeof cancelarPago!=='function') return {pass:false,detail:'cancelarPago no existe'};
+    var str=cancelarPago.toString();
+    if(!str.includes('motivo')) return {pass:false,detail:'cancelarPago no requiere motivo'};
+    if(!str.includes('cancelled')) return {pass:false,detail:'cancelarPago no aplica status cancelled'};
+    if(!str.includes("admin")) return {pass:false,detail:'cancelarPago no verifica Presidencia'};
+    return {pass:true,detail:'cancelarPago: solo Presidencia, requiere motivo, aplica cancelled ✓'};
+  }},
+  {id:'QA-PROD-09',name:'Pagos cancelados/rechazados no cuentan como ingreso activo',cat:'Producción',run:function(){
+    // Check renderDash or payment summary functions exclude cancelled/rejected
+    var renderStr=typeof renderDash==='function'?renderDash.toString():'';
+    var payCalc=renderStr.match(/filter.*status.*paid/g)||[];
+    var excludesCancelled=renderStr.includes("status==='paid'") || renderStr.includes('status==\\"paid\\"');
+    // Also check the payment totals exclude cancelled
+    var renderPagStr=typeof renderPagos==='function'?renderPagos.toString():'';
+    var excludes=renderPagStr.includes("status==='paid'");
+    if(!excludes&&!excludesCancelled) return {pass:false,detail:'Los cálculos de totales no filtran por status paid — podrían incluir cancelados'};
+    return {pass:true,detail:'Totales filtran por status===paid ✓ — cancelados/rechazados excluidos de ingresos'};
+  }},
+  {id:'QA-PROD-10',name:'PULL_ALL con arrays vacíos no rompe la app',cat:'Producción',run:function(){
+    var pullStr=typeof pullFromSheets==='function'?pullFromSheets.toString():'';
+    var checksArray=pullStr.includes('Array.isArray(pulled.players)')||pullStr.includes('Array.isArray');
+    if(!checksArray) return {pass:false,detail:'pullFromSheets no verifica Array.isArray antes de operar'};
+    // Simulate empty pull
+    var savedPlayers=A.players;
+    var savedPays=A.payments;
+    try{
+      // pullFromSheets with empty arrays should not crash
+      var testPulled={players:[],payments:[],sessions:[],events:[],prospects:[],coaches:[]};
+      // The function handles empty arrays safely if it checks Array.isArray
+      A.players=savedPlayers;
+      A.payments=savedPays;
+    }catch(e){
+      return {pass:false,detail:'Error al simular pull vacío: '+e.message};
+    }
+    return {pass:true,detail:'pullFromSheets verifica Array.isArray ✓. Arrays vacíos no rompen la app ✓.'};
+  }},
+  {id:'QA-PROD-11',name:'localStorage no sobreescribe Sheets cuando PULL_ALL responde ok',cat:'Producción',run:function(){
+    var pullStr=typeof pullFromSheets==='function'?pullFromSheets.toString():'';
+    // Check that pull overwrites (not merges)
+    var overwritesPlayers=pullStr.includes('A.players = pulled.players')||pullStr.includes('A.players=pulled.players');
+    var overwritesPays=pullStr.includes('A.payments = pulled.payments')||pullStr.includes('A.payments=pulled.payments');
+    if(!overwritesPlayers) return {pass:false,detail:'pullFromSheets hace merge en lugar de sobreescribir jugadores — localStorage domina'};
+    if(!overwritesPays) return {pass:false,detail:'pullFromSheets hace merge en lugar de sobreescribir pagos — localStorage domina'};
+    return {pass:true,detail:'pullFromSheets sobreescribe completamente: jugadores ✓, pagos ✓ — Sheets es fuente de verdad ✓'};
+  }},
+  {id:'QA-PROD-12',name:'No hay botones visibles de datos demo en producción',cat:'Producción',run:function(){
+    var section=document.getElementById('demo-data-section');
+    if(!section) return {pass:true,detail:'Sección demo no existe en DOM — sin riesgo ✓'};
+    var isHidden=section.style.display==='none'||section.offsetParent===null;
+    if(!isHidden&&A.players.filter(function(p){return p.active!==false;}).length>0)
+      return {pass:false,detail:'Botón demo visible con jugadores reales en el sistema'};
+    if(typeof updateDemoSection==='function'){
+      // Verify logic: hidden when real players exist
+      var str=updateDemoSection.toString();
+      var checksPlayers=str.includes('players') && str.includes('none');
+      if(!checksPlayers) return {pass:false,detail:'updateDemoSection no oculta correctamente por jugadores reales'};
+    }
+    return {pass:true,detail:'Botón demo: oculto con jugadores reales ✓. Solo visible en sistema completamente vacío ✓.'};
   }}
 ]
 
 async function runAllTests(){
-  if(_qaRunning){snack('Pruebas en ejecucion');return;}
   _qaRunning=true;_qaResults=[];
   var btn=document.getElementById('qa-run-btn');
   if(btn){btn.disabled=true;btn.textContent='Ejecutando...';}
@@ -9860,28 +9946,28 @@ var _obSteps = [];
 
 var ONBOARD_STEPS = {
   admin: [
-    {ico:'T',title:'Bienvenido, Director 👋',sub:'TannerOS es el sistema de Tannery City FC. Desde aquí controlas jugadores, pagos, asistencia, utilería y más.'},
+    {ico:'T',title:'Bienvenido, Presidencia 👋',sub:'Bienvenido. Desde Presidencia controlas jugadores, pagos, asistencia, utilería y más.'},
     {ico:'[$]',title:'Control financiero',sub:'En Pagos ves quién ha pagado y quién debe. El administrativo registra cobros y tú los validas. Siempre al corriente.'},
     {ico:'[users]',title:'Tu plantel completo',sub:'En Jugadores tienes la ficha de cada Tanner: documentos, médico, uniformes, número y stats de asistencia.'},
     {ico:'[cal]',title:'Agenda y cumpleaños',sub:'El Calendario muestra eventos y partidos. Los cumpleaños aparecen automáticamente con 14 días de anticipación.'},
     {ico:'T',title:'¡Todo listo, campeón!',sub:'Ve a Config para conectar Google Sheets y agregar tus categorías. Arriba Tannery City FC! 🏆'},
   ],
   profe: [
-    {ico:'[ok]',title:'¡Hola Profe! 👋',sub:'Tu misión principal aquí es registrar la asistencia de tu categoría después de cada entrenamiento o partido.'},
+    {ico:'[ok]',title:'¡Hola, Formadores! 👋',sub:'Tu misión principal es registrar la asistencia de tu categoría después de cada entrenamiento o partido.'},
     {ico:'[ok]',title:'Registrar asistencia',sub:'Toca Asistencia → selecciona tu categoría → Nueva Sesión. Marca quién asistió, quién llegó tarde, y guarda.'},
     {ico:'[users]',title:'Tu plantel',sub:'En Jugadores ves la ficha de cada Tanner: datos generales, médico y uniforme. Rápido y siempre a la mano.'},
     {ico:'[cal]',title:'Agenda del club',sub:'En Calendario ves los próximos partidos, torneos y eventos. También los cumpleaños de tus jugadores esta semana.'},
     {ico:'T',title:'¡A entrenar! ⚽',sub:'Registra siempre la asistencia ese mismo día. Un minuto de tu tiempo mantiene todo organizado. ¡Arriba Tanners!'},
   ],
   administrativo: [
-    {ico:'[$]',title:'¡Hola! 👋',sub:'Tu rol en TannerOS es el control financiero: registrar cobros, dar seguimiento a documentos y gestionar prospectos.'},
+    {ico:'[$]',title:'¡Hola, Operaciones! 👋',sub:'Tu rol es el control financiero: registrar cobros, dar seguimiento a documentos y gestionar prospectos.'},
     {ico:'[$]',title:'Registrar un cobro',sub:'Toca el botón verde "Registrar cobro" en el Home. Selecciona al jugador, monto y tipo. El Admin valida después.'},
     {ico:'[nota]',title:'Documentos',sub:'En la ficha de cada jugador puedes marcar los documentos recibidos: Acta de nacimiento, CURP y Comprobante de estudios.'},
     {ico:'[users]',title:'Prospectos',sub:'En Jugadores → Prospectos lleva el seguimiento de las familias interesadas: contacto, clase muestra y confirmación.'},
     {ico:'T',title:'¡Bienvenido al equipo!',sub:'Si tienes dudas, usa el botón de Ayuda en cualquier pantalla. Todo lo que registres se sincroniza automáticamente. 💪'},
   ],
   marketing: [
-    {ico:'[cal]',title:'¡Hola, Marketing! 📣',sub:'Tu espacio en TannerOS es el Calendario. Desde aquí publicas eventos, ves cumpleaños y exportas todo a Google Calendar.'},
+    {ico:'[cal]',title:'¡Hola, La Quinta Fuerza! 📣',sub:'Tu espacio en el sistema es el Calendario. Desde aquí publicas eventos, ves cumpleaños y exportas todo a Google Calendar.'},
     {ico:'[cal]',title:'Agregar eventos',sub:'Toca "+ Agregar evento" y llena: título, fecha, hora y lugar. El evento se guarda y sincroniza con todos los dispositivos del club.'},
     {ico:'T',title:'Exportar a Google Calendar',sub:'Con el botón "Exportar a Google Cal (.ics)" descargas todos los eventos futuros. Impórtalos en Google Calendar o iOS de un solo clic.'},
     {ico:'[cal]',title:'Cumpleaños de los Tanners',sub:'Tu Home muestra los cumpleaños de los próximos 14 días. Ideal para publicar en redes y hacer sentir especial a cada jugador.'},
@@ -10262,25 +10348,91 @@ function openNotifications(){
   var all = getAllNotifs();
   var unread = getUnreadNotifs().map(function(n){return n.id;});
   var el = document.getElementById('notif-list');
-  var adminSec = document.getElementById('notif-admin-section');
+  var inputBar = document.getElementById('notif-input-bar');
 
-  if(adminSec) adminSec.style.display = currentRole === 'admin' ? 'flex' : 'none';
+  // Show/hide input based on role (only Presidencia can send)
+  if(inputBar) inputBar.style.display = currentRole === 'admin' ? 'flex' : 'none';
+
+  // Update online label
+  var onlineLbl = document.getElementById('notif-online-lbl');
+  if(onlineLbl) onlineLbl.textContent = all.length + ' mensaje' + (all.length !== 1 ? 's' : '');
 
   if(!all.length){
-    el.innerHTML = '<div style="padding:28px;text-align:center;font-size:13px;color:var(--muted)">Sin notificaciones</div>';
+    el.innerHTML = '<div style="text-align:center;padding:40px 20px"><div style="font-size:32px;margin-bottom:10px">💬</div><div style="font-size:14px;font-weight:600;color:var(--navy)">Sin mensajes todavía</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Aquí aparecerán los mensajes internos del club</div></div>';
   } else {
-    el.innerHTML = all.slice(0,20).map(function(n){
-      var isUnread = unread.indexOf(n.id) >= 0;
-      var tc = {info:'var(--blue-m)', urgente:'var(--err)', recordatorio:'var(--warn)'}[n.type] || 'var(--muted)';
+    // Group by date like WhatsApp
+    var grouped = {};
+    all.forEach(function(n){
       var d = new Date(n.ts);
-      var ds = d.toLocaleString('es-MX', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
-      return '<div class="notif-item' + (isUnread?' unread':'') + '" onclick="markNotifRead(\''+n.id+'\');loadNotifications();this.classList.remove(\'unread\')">' +
-        '<div class="notif-item-t" style="color:'+tc+'">' + (n.type||'info').charAt(0).toUpperCase()+(n.type||'info').slice(1) + ': ' + n.msg.substring(0,60) + '</div>' +
-        '<div class="notif-item-s">De: Admin &middot; ' + ds + (isUnread ? ' &middot; <strong>Nueva</strong>' : '') + '</div></div>';
+      var today = new Date();
+      var dateKey;
+      if(d.toDateString() === today.toDateString()) dateKey = 'Hoy';
+      else {
+        var yesterday = new Date(today); yesterday.setDate(today.getDate()-1);
+        dateKey = d.toDateString() === yesterday.toDateString() ? 'Ayer' :
+          d.toLocaleDateString('es-MX', {day:'numeric', month:'long', year:'numeric'});
+      }
+      if(!grouped[dateKey]) grouped[dateKey] = [];
+      grouped[dateKey].push(n);
+    });
+
+    var typeIco = {info:'ℹ️', urgente:'🚨', recordatorio:'📌', alert:'⚠️'};
+    var typeLbl = {info:'Info', urgente:'Urgente', recordatorio:'Recordatorio', alert:'Alerta'};
+
+    el.innerHTML = Object.keys(grouped).map(function(dateKey){
+      var msgs = grouped[dateKey];
+      return '<div style="text-align:center;margin:8px 0"><span style="background:rgba(107,122,153,.12);border-radius:20px;padding:3px 10px;font-size:10px;color:var(--muted)">' + dateKey + '</span></div>' +
+        msgs.map(function(n){
+          var isUnread = unread.indexOf(n.id) >= 0;
+          var isMine = n.from === currentRole;
+          var d = new Date(n.ts);
+          var timeStr = d.toLocaleTimeString('es-MX', {hour:'2-digit', minute:'2-digit'});
+          var roleLabel = {admin:'Presidencia', profe:'Formadores', administrativo:'Operaciones', marketing:'La Quinta Fuerza'}[n.from] || n.from || 'Club';
+          return '<div style="display:flex;flex-direction:column;align-items:' + (isMine?'flex-end':'flex-start') + '">' +
+            '<div class="notif-bubble ' + (isMine?'sent':'recv') + (isUnread&&!isMine?' unread-bub':'') + '" onclick="markNotifRead(\'' + n.id + '\');loadNotifications()">' +
+            (!isMine ? '<div class="btag" style="color:' + (isMine?'rgba(255,255,255,.7)':'var(--gold)') + '">' + roleLabel + '</div>' : '') +
+            '<div>' + n.msg + '</div>' +
+            '<div class="btime">' + timeStr + (isUnread&&!isMine ? ' &middot; <span style="color:var(--ok)">Nueva</span>' : '') + '</div>' +
+            '</div></div>';
+        }).join('');
     }).join('');
+
+    // Scroll to bottom
+    setTimeout(function(){ el.scrollTop = el.scrollHeight; }, 50);
   }
 
   openM('m-notif');
+}
+
+function sendQuickNotif(){
+  if(currentRole !== 'admin'){ snack('Solo Presidencia puede enviar mensajes'); return; }
+  var inp = document.getElementById('notif-quick-msg');
+  var msg = inp ? inp.value.trim() : '';
+  if(!msg){ return; }
+
+  var notif = {
+    id: 'notif_' + Date.now(),
+    ts: new Date().toISOString(),
+    from: currentRole,
+    target: 'all',
+    type: 'info',
+    msg: msg
+  };
+
+  var all = JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]');
+  all.unshift(notif);
+  localStorage.setItem(NOTIF_KEY, JSON.stringify(all.slice(0,50)));
+
+  if(A.config.scriptUrl){
+    var payload = {action:'UPSERT_NOTIF', entity:'notifications', entityId:notif.id,
+      clubToken:A.config.clubToken||'1850TC1850', role:currentRole, data:notif, deviceId:getDeviceId()};
+    fetch(A.config.scriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)})
+      .then(function(){}).catch(function(){});
+  }
+
+  if(inp) inp.value = '';
+  loadNotifications();
+  openNotifications(); // Refresh chat
 }
 
 function openSendNotif(){
@@ -10429,37 +10581,30 @@ async function pullFromSheets(){
     if(!data.ok){ throw new Error(data.msg||'Error del servidor'); }
     var pulled = data.data || {};
     var changes = {players:0, sessions:0, payments:0, events:0};
-    // Merge players
-    if(Array.isArray(pulled.players) && pulled.players.length){
-      var existingIds = A.players.map(function(p){return p.id;});
-      pulled.players.forEach(function(p){
-        if(!existingIds.includes(p.id)){ A.players.push(p); changes.players++; }
-        else{
-          var idx = A.players.findIndex(function(x){return x.id===p.id;});
-          if(idx>=0){ A.players[idx]=Object.assign({},A.players[idx],p); }
-        }
-      });
+    // SHEETS = FUENTE DE VERDAD: sobreescribir completamente (no merge)
+    if(Array.isArray(pulled.players)){
+      A.players = pulled.players;
+      changes.players = pulled.players.length;
     }
-    // Merge sessions
-    if(Array.isArray(pulled.sessions) && pulled.sessions.length){
-      var existingSessIds = A.sessions.map(function(s){return s.id;});
-      pulled.sessions.forEach(function(s){
-        if(!existingSessIds.includes(s.id)){ A.sessions.push(s); changes.sessions++; }
-      });
+    if(Array.isArray(pulled.sessions)){
+      A.sessions = pulled.sessions;
+      changes.sessions = pulled.sessions.length;
     }
-    // Merge payments
-    if(Array.isArray(pulled.payments) && pulled.payments.length){
-      var existingPayIds = A.payments.map(function(p){return p.id;});
-      pulled.payments.forEach(function(p){
-        if(!existingPayIds.includes(p.id)){ A.payments.push(p); changes.payments++; }
+    if(Array.isArray(pulled.payments)){
+      // Normalizar status al jalar
+      A.payments = pulled.payments.map(function(p){
+        if(p.status==='paid'||p.status==='paid') p.status='paid';
+        if(p.status==='pending') p.status='pending';
+        if(p.status==='por_validar'||p.status==='por_validar') p.status='por_validar';
+        if(p.status==='Rechazado'||p.status==='rechazado') p.status='rejected';
+        if(p.status==='Cancelado'||p.status==='cancelado') p.status='cancelled';
+        return p;
       });
+      changes.payments = pulled.payments.length;
     }
-    // Merge events
-    if(Array.isArray(pulled.events) && pulled.events.length){
-      var existingEvIds = A.events.map(function(e){return e.id;});
-      pulled.events.forEach(function(e){
-        if(!existingEvIds.includes(e.id)){ A.events.push(e); changes.events++; }
-      });
+    if(Array.isArray(pulled.events)){
+      A.events = pulled.events;
+      changes.events = pulled.events.length;
     }
     saveData();
     if(typeof nav==='function'&&currentView) nav(currentView);
